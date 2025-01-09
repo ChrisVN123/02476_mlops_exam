@@ -45,7 +45,7 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, epochs):
 
     return train_losses, val_losses
 
-def visualize_training(train_losses, val_losses):
+def visualize_training(train_losses, val_losses,path_result):
     plt.figure(figsize=(10, 6))
     plt.plot(train_losses, label='Training Loss')
     plt.plot(val_losses, label='Validation Loss')
@@ -53,4 +53,4 @@ def visualize_training(train_losses, val_losses):
     plt.ylabel('Loss')
     plt.title('Training and Validation Loss Over Epochs')
     plt.legend()
-    plt.savefig("../../results/training_evolution.png")
+    plt.savefig(f"{path_result}/training.png")

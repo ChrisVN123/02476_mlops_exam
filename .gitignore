@@ -177,5 +177,5 @@ cython_debug/
 #.idea/
 /data
 .dvc/config
-/models/sentiment_model.pth
+/models/sector_classification_model.pth
 exammlops-2646a2d1aba5.json

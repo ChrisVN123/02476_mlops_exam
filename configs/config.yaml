@@ -1,0 +1,36 @@
+training:
+  learning_rate: 0.001
+  batch_size: 32
+  epochs: 50
+  optimizer: adam
+  loss_function: cross_entropy
+  training_image: ${hydra:runtime.cwd}/results
+
+model:
+  architecture: resnet50
+  pretrained: true
+  num_classes: 10
+  save_path: ${hydra:runtime.cwd}/models/sector_classification_model.pth
+
+data:
+  raw_path: ${hydra:runtime.cwd}/data/raw/sp500_companies.csv
+  train_val_test_split: [0.7, 0.2, 0.1]
+  augmentation: true
+
+misc:
+  random_seed: 42
+  device: cuda
+  log_dir: ${hydra:runtime.cwd}/logs
+  checkpoint_dir: ${hydra:runtime.cwd}/checkpoints
+
+api:
+  new_company:
+    Exchange: "NASDAQ"
+    Symbol: "AAPL"
+    Industry: "Technology"
+    Currentprice: 150.0
+    Marketcap: 2500000000000
+    Ebitda: 80000000000
+    Revenuegrowth: 0.05
+    Fulltimeemployees: 154000
+    Weight: 0.01

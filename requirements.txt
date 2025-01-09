@@ -11,3 +11,4 @@ numpy<2
 transformers==4.47.1
 dvc
 dvc-gdrive
+hydra-core
