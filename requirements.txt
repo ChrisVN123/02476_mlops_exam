@@ -12,3 +12,5 @@ transformers==4.47.1
 dvc
 dvc-gdrive
 hydra-core
+torch_tb_profiler
+loguru
