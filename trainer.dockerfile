@@ -8,8 +8,6 @@ RUN apt update && \
     apt clean && rm -rf /var/lib/apt/lists/*
     
 
-
-
 COPY requirements.txt requirements.txt
 COPY pyproject.toml pyproject.toml
 COPY src/exam_project/ src/exam_project/

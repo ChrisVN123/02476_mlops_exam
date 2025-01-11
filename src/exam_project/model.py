@@ -20,8 +20,8 @@ class SectorClassifier(nn.Module):
 
 if __name__ == "__main__":
     # Specify input size and number of classes
-    input_size = 784  # Example: flattened 28x28 images
-    num_classes = 10  # Example: classify into 10 categories
+    input_size = 784  
+    num_classes = 10 
 
     # Initialize the model
     model = SectorClassifier(input_size=input_size, num_classes=num_classes)
