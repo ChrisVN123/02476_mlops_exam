@@ -14,3 +14,4 @@ dvc-gdrive
 hydra-core
 torch_tb_profiler
 loguru
+wandb

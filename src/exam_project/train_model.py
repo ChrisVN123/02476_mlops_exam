@@ -8,7 +8,7 @@ from data import load_and_preprocess_data
 from model import SectorClassifier
 from api import preprocess_new_company, predict_sector
 from loguru import logger
-
+import wandb  # Import Weights & Biases
 
 # Configure the logger
 logger.add("/Users/christianvanellnielsen/Library/CloudStorage/OneDrive-Personligt/Documents/Christian/DTU/5. Semester/02476_mlops_exam/results/app.log", level="DEBUG", rotation="10 MB")
@@ -16,6 +16,16 @@ logger.add("/Users/christianvanellnielsen/Library/CloudStorage/OneDrive-Personli
 @hydra.main(config_path='../../configs', config_name="config.yaml")
 def main(cfg: DictConfig):
     try:
+        # Initialize W&B
+        wandb.init(
+            project="sector-classification",
+            config={
+                "learning_rate": cfg.training.learning_rate,
+                "batch_size": cfg.training.batch_size,
+                "epochs": cfg.training.epochs,
+                "random_seed": cfg.misc.random_seed,
+            }
+        )
         logger.info(f"Resolved raw data path: {cfg.data.raw_path}")
         
         # Set seed for reproducibility
@@ -48,18 +58,23 @@ def main(cfg: DictConfig):
         
         # Train the model
         logger.info("Starting training...")
-        train_losses, val_losses = train_model(model, train_loader, val_loader, criterion, optimizer, cfg.training.epochs)
+        train_losses, val_losses = train_model(
+            model, train_loader, val_loader, criterion, optimizer, cfg.training.epochs, log_to_wandb=True
+        )
         visualize_training(train_losses, val_losses, cfg.training.training_image)
         logger.success("Training completed.")
         
         # Evaluate the model
         logger.info("Evaluating model...")
-        evaluate_model(model, test_loader)
-        logger.success("Model evaluation completed.")
+        test_loss, test_accuracy = evaluate_model(model, test_loader)
+        logger.info(f"Test Loss: {test_loss:.4f}, Test Accuracy: {test_accuracy:.4f}")
+        wandb.log({"test_loss": test_loss, "test_accuracy": test_accuracy})
+
         
         # Save the model
         model_path = cfg.model.save_path
         torch.save(model.state_dict(), model_path)
+        wandb.save(model_path)  # Save the model artifact to W&B
         logger.info(f"Model saved to {model_path}")
         
         # Predict sector for a new company
@@ -67,11 +82,12 @@ def main(cfg: DictConfig):
         new_company_transformed = preprocess_new_company(cfg.api.new_company, column_transformer)
         sector_index = predict_sector(model, new_company_transformed)
         sector_name = pd.get_dummies(pd.read_csv(file_path)['Sector']).columns[sector_index]
+        wandb.log({"predicted_sector": sector_name})
         logger.success(f"Predicted Sector: {sector_name}")
     
     except Exception as e:
         logger.exception("An error occurred during execution.")
-
+        wandb.finish(exit_code=1)
 
 if __name__ == "__main__":
     main()

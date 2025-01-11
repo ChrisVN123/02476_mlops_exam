@@ -3,6 +3,7 @@ import torch
 from torch.utils.data import DataLoader, TensorDataset
 from torch.optim import Adam
 import matplotlib.pyplot as plt
+import wandb  # Import Weights & Biases
 
 from model import SectorClassifier
 
@@ -15,10 +16,13 @@ def create_dataloader(X, y, batch_size):
     dataset = TensorDataset(X, y)
     return DataLoader(dataset, batch_size=batch_size, shuffle=True)
 
-
-def train_model(model, train_loader, val_loader, criterion, optimizer, epochs):
+def train_model(model, train_loader, val_loader, criterion, optimizer, epochs, log_to_wandb=False):
     train_losses = []
     val_losses = []
+
+    if log_to_wandb:
+        wandb.watch(model, log="all", log_freq=10)  # Track weights and gradients
+
     for epoch in range(epochs):
         model.train()
         train_loss = 0
@@ -41,11 +45,19 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, epochs):
                 val_loss += loss.item()
         val_losses.append(val_loss / len(val_loader))
 
+        # Print and log progress
         print(f"Epoch {epoch+1}/{epochs}, Train Loss: {train_losses[-1]:.4f}, Val Loss: {val_losses[-1]:.4f}")
+        
+        if log_to_wandb:
+            wandb.log({
+                "epoch": epoch + 1,
+                "train_loss": train_losses[-1],
+                "val_loss": val_losses[-1],
+            })
 
     return train_losses, val_losses
 
-def visualize_training(train_losses, val_losses,path_result):
+def visualize_training(train_losses, val_losses, path_result):
     plt.figure(figsize=(10, 6))
     plt.plot(train_losses, label='Training Loss')
     plt.plot(val_losses, label='Validation Loss')
@@ -54,3 +66,6 @@ def visualize_training(train_losses, val_losses,path_result):
     plt.title('Training and Validation Loss Over Epochs')
     plt.legend()
     plt.savefig(f"{path_result}/training.png")
+
+    # Log training visualization to W&B
+    wandb.log({"training_curve": wandb.Image(f"{path_result}/training.png")})
