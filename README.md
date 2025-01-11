@@ -1,6 +1,6 @@
 # exam_project
 
-This is the exam project for our group in course 02476 Machine Learning Operations. The project applies Deep Learning methods on a relevant topic, but focuses mainly on the structure of the code, repository, version control, and much more regarding how to collaborate on large projects as a team and making reproducible research.
+This is the exam project for our group in course 02476 Machine Learning Operations. The project applies Deep Learning methods on a relevant topic, but focuses mainly on the structure of the code, repository, version control, and much more regarding how to collaborate on large projects as a team and making reproducible research. The model that is implemented uses data of SP500 companies in the us containing both financial data on revenue, EBITDA and similar, together with minor categorical information. The idea of the model is to predict which sector it belongs to ex. if the model get a company like Apple it should return technology. The idea is to see if it is possible to do segmentation on comapany sector based on simple financial input knowledge.
 
 ## Project structure
 

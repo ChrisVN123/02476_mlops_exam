@@ -66,13 +66,13 @@ will check the repositories and the code to verify your answers.
 * [X] Used Hydra to load the configurations and manage your hyperparameters (M11)
 * [X] Use profiling to optimize your code (M12) <!-- Have not included the it in the code, only used it for optimizin and removed after -->
 * [X] Use logging to log important events in your code (M14)
-* [ ] Use Weights & Biases to log training progress and other important metrics/artifacts in your code (M14)
-* [ ] Consider running a hyperparameter optimization sweep (M14)
+* [X] Use Weights & Biases to log training progress and other important metrics/artifacts in your code (M14)
+* [X] Consider running a hyperparameter optimization sweep (M14)
 * [ ] Use PyTorch-lightning (if applicable) to reduce the amount of boilerplate in your code (M15)
 
 ### Week 2
 
-* [ ] Write unit tests related to the data part of your code (M16)
+* [X] Write unit tests related to the data part of your code (M16)
 * [ ] Write unit tests related to model construction and or model training (M16)
 * [ ] Calculate the code coverage (M16)
 * [ ] Get some continuous integration running on the GitHub repository (M17)
@@ -116,7 +116,7 @@ will check the repositories and the code to verify your answers.
 ### Question 1
 > **Enter the group number you signed up on <learn.inside.dtu.dk>**
 >
-> Answer: 4
+> Answer: 
 
 --- question 1 fill here ---
 
@@ -125,11 +125,11 @@ will check the repositories and the code to verify your answers.
 >
 > Example:
 >
-> *s201725, s224397, s224411*
+> **
 >
-> Answer:
+> Answer: 
 
---- question 2 fill here ---
+s201725, s224397, s224411
 
 ### Question 3
 > **A requirement to the project is that you include a third-party package not covered in the course. What framework**
