@@ -11,13 +11,14 @@ from loguru import logger
 import wandb  # Import Weights & Biases
 
 # Configure the logger
-logger.add("/Users/christianvanellnielsen/Library/CloudStorage/OneDrive-Personligt/Documents/Christian/DTU/5. Semester/02476_mlops_exam/results/app.log", level="DEBUG", rotation="10 MB")
+logger.add("results/app.log", level="DEBUG", rotation="10 MB")
 
-@hydra.main(config_path='../../configs', config_name="config.yaml")
+@hydra.main(config_path='../../configs', config_name="config.yaml", version_base="1.1")
 def main(cfg: DictConfig):
     try:
         # Initialize W&B
         wandb.init(
+            entity = "dtumlops_24",
             project="sector-classification",
             config={
                 "learning_rate": cfg.training.learning_rate,
