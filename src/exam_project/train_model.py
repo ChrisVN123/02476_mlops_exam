@@ -13,7 +13,7 @@ import wandb  # Import Weights & Biases
 # Configure the logger
 logger.add("results/app.log", level="DEBUG", rotation="10 MB")
 
-@hydra.main(config_path='../../configs', config_name="config.yaml", version_base="1.2")
+@hydra.main(config_path='../../configs', config_name="config.yaml", version_base="1.3")
 def main(cfg: DictConfig):
     try:
         # Initialize W&B
