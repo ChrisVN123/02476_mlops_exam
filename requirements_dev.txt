@@ -18,4 +18,4 @@ mkdocstrings-python==1.12.2
 
 
 # Editable
--e .
+#-e .

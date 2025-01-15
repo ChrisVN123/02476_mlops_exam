@@ -16,3 +16,6 @@ torch_tb_profiler
 loguru
 wandb
 coverage
+
+# Editable
+-e .
