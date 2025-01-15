@@ -1,3 +1,4 @@
+# Editable
 torch==2.2.2
 typer==0.15.1
 fastapi==0.115.6
@@ -17,5 +18,3 @@ loguru
 wandb
 coverage
 
-# Editable
--e .
