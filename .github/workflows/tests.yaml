@@ -56,7 +56,7 @@ jobs:
 
 
       - name: Download test data from Google Cloud Storage
-        run: gsutil cp gs://exam_mlops_data_bucket/data/ ./data/Graw
+        run: gsutil cp -r gs://exam_mlops_data_bucket/data/ ./data/Graw
 
       - name: Run tests & coverage
         run: |
