@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - GithubActionCloudData
   pull_request:
     branches:
       - main
@@ -27,6 +28,12 @@ jobs:
           cache: 'pip'
           cache-dependency-path: setup.py
 
+      - name: Set up gcloud Cloud SDK environment
+        uses: google-github-actions/setup-gcloud@v2.1.2
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+
       - name: Install dependencies
         run: |
           
@@ -36,6 +43,9 @@ jobs:
           pip install -r requirements_dev.txt
           pip list
 
+
+      - name: Download test data from Google Cloud Storage
+        run: gsutil cp gs://exam_mlops_data_bucket/data/ ./data/Graw
 
       - name: Run tests & coverage
         run: |
