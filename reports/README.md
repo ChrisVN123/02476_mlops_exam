@@ -72,18 +72,18 @@ will check the repositories and the code to verify your answers.
 
 ### Week 2
 
-* [X] Write unit tests related to the data part of your code (M16)
-* [ ] Write unit tests related to model construction and or model training (M16)
-* [ ] Calculate the code coverage (M16)
-* [ ] Get some continuous integration running on the GitHub repository (M17)
-* [ ] Add caching and multi-os/python/pytorch testing to your continuous integration (M17)
-* [ ] Add a linting step to your continuous integration (M17)
-* [ ] Add pre-commit hooks to your version control setup (M18)
-* [ ] Add a continues workflow that triggers when data changes (M19)
-* [ ] Add a continues workflow that triggers when changes to the model registry is made (M19)
-* [ ] Create a data storage in GCP Bucket for your data and link this with your data version control setup (M21)
-* [ ] Create a trigger workflow for automatically building your docker images (M21)
-* [ ] Get your model training in GCP using either the Engine or Vertex AI (M21)
+* [X] Write unit tests related to the data part of your code (M16) <!--- Christian -->
+* [X] Write unit tests related to model construction and or model training (M16) <!--- Christian -->
+* [X] Calculate the code coverage (M16) <!--- Christian -->
+* [ ] Get some continuous integration running on the GitHub repository (M17) <!--- Harris -->
+* [ ] Add caching and multi-os/python/pytorch testing to your continuous integration (M17) <!--- Harris -->
+* [ ] Add a linting step to your continuous integration (M17) <!--- Harris -->
+* [ ] Add pre-commit hooks to your version control setup (M18) <!--- Harris -->
+* [ ] Add a continues workflow that triggers when data changes (M19) <!--- Fabian -->
+* [ ] Add a continues workflow that triggers when changes to the model registry is made (M19) <!--- Fabian -->
+* [ ] Create a data storage in GCP Bucket for your data and link this with your data version control setup (M21) <!--- Christian -->
+* [ ] Create a trigger workflow for automatically building your docker images (M21) <!--- Christian -->
+* [ ] Get your model training in GCP using either the Engine or Vertex AI (M21) <!--- Christian -->
 * [ ] Create a FastAPI application that can do inference using your model (M22)
 * [ ] Deploy your model in GCP using either Functions or Run as the backend (M23)
 * [ ] Write API tests for your application and setup continues integration for these (M24)
