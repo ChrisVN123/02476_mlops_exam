@@ -4,7 +4,7 @@ import numpy as np
 from exam_project.data import load_and_preprocess_data
 from tests.__init__ import _PATH_DATA  # Adjust this import to your actual utils module
 from sklearn.compose import ColumnTransformer
-
+# new change
 
 def test_load_and_preprocess_data():
     """Test that the data is loaded and preprocessed correctly."""
