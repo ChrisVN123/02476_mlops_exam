@@ -28,9 +28,9 @@ jobs:
           cache: 'pip'
           cache-dependency-path: setup.py
 
-      - name: Debug environment variables
-        run: env | grep ${{ secrets.GCP_SA_KEY }}
-
+      - name: Debug Secrets
+        run: echo "Secret is available"
+        if: secrets.GCP_SA_KEY
 
       # Authenticate with Google Cloud
       - name: Authenticate to Google Cloud
