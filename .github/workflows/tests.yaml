@@ -28,6 +28,9 @@ jobs:
           cache: 'pip'
           cache-dependency-path: setup.py
 
+      - name: Debug environment variables
+        run: env | grep GCP_SA_KEY
+
       # Authenticate with Google Cloud
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
