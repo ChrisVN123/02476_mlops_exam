@@ -2,7 +2,7 @@ import pytest
 import pandas as pd
 import numpy as np
 from exam_project.data import load_and_preprocess_data
-from tests.__init__ import _PATH_DATA  # Adjust this import to your actual utils module
+from tests.__init__ import _PATH_DATA 
 from sklearn.compose import ColumnTransformer
 
 
