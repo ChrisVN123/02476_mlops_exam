@@ -29,9 +29,11 @@ jobs:
           cache-dependency-path: setup.py
 
       - name: Debug Secrets
-        run: echo "Secret is available"
-        if: secrets.GCP_SA_KEY
-
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+        run: |
+          echo "GCP_SA_KEY is set"
+          echo $GCP_SA_KEY | jq . # Validate JSON structure (install jq if needed)
       # Authenticate with Google Cloud
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
