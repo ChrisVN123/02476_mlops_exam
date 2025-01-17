@@ -1,0 +1,5 @@
+[core]
+    remote = cloud
+['remote "cloud"']
+    url = gs://exam_mlops_data_bucket/dvc
+    version_aware = true
