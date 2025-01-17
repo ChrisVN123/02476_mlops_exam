@@ -1,6 +1,7 @@
 import torch
 from torch import nn
 
+
 class SectorClassifier(nn.Module):
     def __init__(self, input_size, num_classes):
         super(SectorClassifier, self).__init__()
@@ -18,10 +19,11 @@ class SectorClassifier(nn.Module):
         x = torch.softmax(self.fc3(x), dim=1)
         return x
 
+
 if __name__ == "__main__":
     # Specify input size and number of classes
-    input_size = 784  
-    num_classes = 10 
+    input_size = 784
+    num_classes = 10
 
     # Initialize the model
     model = SectorClassifier(input_size=input_size, num_classes=num_classes)

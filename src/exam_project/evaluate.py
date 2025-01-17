@@ -2,6 +2,7 @@
 
 import torch
 
+
 def evaluate_model(model, test_loader):
     model.eval()
     test_loss = 0
@@ -17,7 +18,7 @@ def evaluate_model(model, test_loader):
             preds = torch.argmax(outputs, dim=1)
             correct += (preds == torch.argmax(y_batch, dim=1)).sum().item()
             total += y_batch.size(0)
-    
+
     test_loss /= len(test_loader)
     accuracy = correct / total
     return test_loss, accuracy
