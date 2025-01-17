@@ -5,16 +5,19 @@ repos:
     rev: 24.8.0  # Use the latest version of black
     hooks:
       - id: black
+        exclude: \.csv$
 
   - repo: https://github.com/pycqa/flake8
     rev: 7.1.1 # Use the latest version of flake8
     hooks:
       - id: flake8
+        exclude: \.csv$
 
   - repo: https://github.com/PyCQA/isort
     rev: 5.13.2  # Use the latest version of isort
     hooks:
       - id: isort
+        exclude: \.csv$
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.2.0
