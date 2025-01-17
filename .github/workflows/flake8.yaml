@@ -29,4 +29,5 @@ jobs:
           cache-dependency-path: setup.py
       - name: Flake test
         run: |
+          pip install -r requirements_test.txt
           flake8 -v
