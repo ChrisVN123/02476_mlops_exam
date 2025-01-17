@@ -5,7 +5,7 @@ repos:
     rev: 24.8.0  # Use the latest version of black
     hooks:
       - id: black
-      - exclude: \.csv$
+        exclude: \.csv$
 
   - repo: https://github.com/pycqa/flake8
     rev: 7.1.1 # Use the latest version of flake8

@@ -28,3 +28,6 @@ omit = ["tests/*"]
 
 [project.scripts]
 train = "my_project.train:main"
+
+[tool.isort]
+profile = "black"
