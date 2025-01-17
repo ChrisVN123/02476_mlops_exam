@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - GithubActionCloudData
   pull_request:
     branches:
       - main
@@ -27,6 +28,23 @@ jobs:
           cache: 'pip'
           cache-dependency-path: setup.py
 
+      - name: Debug Secrets
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+        run: |
+          echo "GCP_SA_KEY is set"
+          echo $GCP_SA_KEY | jq . # Validate JSON structure (install jq if needed)
+      # Authenticate with Google Cloud
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up gcloud Cloud SDK environment
+        uses: google-github-actions/setup-gcloud@v2.1.2
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
       - name: Install dependencies
         run: |
           
@@ -36,6 +54,9 @@ jobs:
           pip install -r requirements_dev.txt
           pip list
 
+
+      - name: Download test data from Google Cloud Storage
+        run: gsutil cp -r gs://exam_mlops_data_bucket/data/ ./data/Graw
 
       - name: Run tests & coverage
         run: |
