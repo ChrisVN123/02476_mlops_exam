@@ -1,4 +1,4 @@
-name: "Flake8 testing"
+name: "isort testing"
 
 on:
   push:
@@ -30,4 +30,4 @@ jobs:
       - name: Flake test
         run: |
           pip install -r requirements_test.txt
-          flake8 -v
+          isort -c -v .

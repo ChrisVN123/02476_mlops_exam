@@ -1,11 +1,13 @@
 # src/exam_project/api.py
-import torch
 import pandas as pd
+import torch
+
 
 def preprocess_new_company(raw_data, column_transformer):
     raw_df = pd.DataFrame([raw_data])
     transformed_data = column_transformer.transform(raw_df).toarray()
     return transformed_data
+
 
 def predict_sector(model, input_data):
     model.eval()
