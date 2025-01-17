@@ -72,9 +72,17 @@ def load_and_preprocess_data(file_path):
     y_encoded = pd.get_dummies(y).values
 
     X_train, X_temp, y_train, y_temp = train_test_split(
-        X_transformed, y_encoded, test_size=0.3, random_state=42
+        X_transformed,
+        y_encoded,
+        test_size=0.3,
+        random_state=42,
     )
-    X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)
+    X_val, X_test, y_val, y_test = train_test_split(
+        X_temp,
+        y_temp,
+        test_size=0.5,
+        random_state=42,
+    )
 
     return column_transformer, X_train, X_val, X_test, y_train, y_val, y_test
 

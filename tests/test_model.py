@@ -68,7 +68,9 @@ def test_model_save_and_load(test_model, tmp_path):
 
     # re-create the model with the same architecture
     input_size = test_model.fc1.in_features  # Input size from the saved model
-    num_classes = test_model.fc3.out_features  # Number of output classes from the saved model
+    num_classes = (
+        test_model.fc3.out_features
+    )  # Number of output classes from the saved model
     loaded_model = SectorClassifier(input_size, num_classes)
 
     # load the saved state into the new model
