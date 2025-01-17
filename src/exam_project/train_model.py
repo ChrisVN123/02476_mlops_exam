@@ -3,13 +3,12 @@ import pandas as pd
 import torch
 import wandb  # Import Weights & Biases
 from api import predict_sector, preprocess_new_company
+from data import load_and_preprocess_data
 from evaluate import evaluate_model
 from loguru import logger
 from model import SectorClassifier
 from omegaconf import DictConfig
 from train import create_dataloader, train_model, visualize_training
-
-from data import load_and_preprocess_data
 
 # Configure the logger
 logger.add("results/app.log", level="DEBUG", rotation="10 MB")
