@@ -81,11 +81,11 @@ will check the repositories and the code to verify your answers.
 * [ ] Add pre-commit hooks to your version control setup (M18) <!--- Harris -->
 * [ ] Add a continues workflow that triggers when data changes (M19) <!--- Fabian -->
 * [ ] Add a continues workflow that triggers when changes to the model registry is made (M19) <!--- Fabian -->
-* [ ] Create a data storage in GCP Bucket for your data and link this with your data version control setup (M21) <!--- Christian -->
+* [X] Create a data storage in GCP Bucket for your data and link this with your data version control setup (M21) <!--- Christian -->
 * [ ] Create a trigger workflow for automatically building your docker images (M21) <!--- Christian -->
 * [ ] Get your model training in GCP using either the Engine or Vertex AI (M21) <!--- Christian -->
-* [ ] Create a FastAPI application that can do inference using your model (M22)
-* [ ] Deploy your model in GCP using either Functions or Run as the backend (M23)
+* [ ] Create a FastAPI application that can do inference using your model (M22)  <!--- Harris -->
+* [ ] Deploy your model in GCP using either Functions or Run as the backend (M23)  <!--- Harris -->
 * [ ] Write API tests for your application and setup continues integration for these (M24)
 * [ ] Load test your application (M24)
 * [ ] Create a more specialized ML-deployment API using either ONNX or BentoML, or both (M25)
