@@ -1,1 +1,7 @@
-pytest
+# testing
+pytest==7.4.3
+coverage==7.6.9
+
+# linting
+ruff==0.1.3
+flake8==7.1.1
