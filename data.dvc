@@ -1,6 +1,11 @@
 outs:
-- md5: 0af03e271e8fcdc9e9af6df656a3c87c.dir
-  size: 1222151
-  nfiles: 6
-  hash: md5
+- hash: md5
   path: data
+  files:
+  - relpath: raw/sp500_companies.csv
+    md5: a14ec99ebde36dc6c88cae79ee1c4c4f
+    size: 803820
+    cloud:
+      cloud:
+        etag: 08ff9dbc9eadfc8a031001
+        version_id: '1737103076429567'
