@@ -10,7 +10,9 @@ from torch.utils.data import DataLoader, Dataset
 from transformers import DistilBertModel, DistilBertTokenizer
 
 # Define project root and file path
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../exam_project_mlops"))
+project_root = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "../../exam_project_mlops")
+)
 file_path = os.path.join(project_root, "data", "raw", "Sentences_AllAgree.txt")
 
 # Load and preprocess data
@@ -60,8 +62,12 @@ texts = df["Text"].tolist()
 labels = df["Sentiment"].tolist()
 tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
 
-X_train, X_val, y_train, y_val = train_test_split(texts, labels, test_size=0.2, random_state=42)
-train_dataset = SentimentDataset(X_train, y_train, tokenizer, max_length=64)  # Reduced max_length for speed
+X_train, X_val, y_train, y_val = train_test_split(
+    texts, labels, test_size=0.2, random_state=42
+)
+train_dataset = SentimentDataset(
+    X_train, y_train, tokenizer, max_length=64
+)  # Reduced max_length for speed
 val_dataset = SentimentDataset(X_val, y_val, tokenizer, max_length=64)
 train_loader = DataLoader(train_dataset, batch_size=8, shuffle=True)
 val_loader = DataLoader(val_dataset, batch_size=8)
@@ -76,7 +82,9 @@ class SentimentClassifier(nn.Module):
         self.out = nn.Linear(self.bert.config.hidden_size, n_classes)
 
     def forward(self, input_ids, attention_mask):
-        pooled_output = self.bert(input_ids=input_ids, attention_mask=attention_mask).last_hidden_state[:, 0]
+        pooled_output = self.bert(
+            input_ids=input_ids, attention_mask=attention_mask
+        ).last_hidden_state[:, 0]
         output = self.drop(pooled_output)
         return self.out(output)
 

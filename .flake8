@@ -1,4 +1,4 @@
 [flake8]
 
-#ignore = 
+#ignore =
 max-line-length = 110

@@ -11,8 +11,8 @@ from tests.__init__ import \
 def test_load_and_preprocess_data():
     """Test that the data is loaded and preprocessed correctly."""
     # Load and preprocess the data
-    column_transformer, X_train, X_val, X_test, y_train, y_val, y_test = load_and_preprocess_data(
-        f"{_PATH_DATA}/sp500_companies.csv"
+    column_transformer, X_train, X_val, X_test, y_train, y_val, y_test = (
+        load_and_preprocess_data(f"{_PATH_DATA}/sp500_companies.csv")
     )
 
     # Assert that the data is loaded and split correctly
@@ -21,7 +21,9 @@ def test_load_and_preprocess_data():
     assert (
         X_train.shape[1] == X_val.shape[1] == X_test.shape[1]
     ), "Feature dimensions must match across splits"
-    assert isinstance(column_transformer, ColumnTransformer), "Column transformer should be returned"
+    assert isinstance(
+        column_transformer, ColumnTransformer
+    ), "Column transformer should be returned"
 
     # Convert to dense array if sparse
     if hasattr(X_train, "toarray"):
@@ -35,4 +37,6 @@ def test_load_and_preprocess_data():
     assert not np.isnan(X_test).any(), "X_test contains missing values"
 
     # Check label dimensions
-    assert y_train.shape[1] == y_val.shape[1] == y_test.shape[1], "Label dimensions must match across splits"
+    assert (
+        y_train.shape[1] == y_val.shape[1] == y_test.shape[1]
+    ), "Label dimensions must match across splits"

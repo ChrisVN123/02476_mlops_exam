@@ -39,8 +39,8 @@ def main(cfg: DictConfig):
         # Load and preprocess the dataset
         file_path = cfg.data.raw_path
         logger.info("Loading and preprocessing data...")
-        column_transformer, X_train, X_val, X_test, y_train, y_val, y_test = load_and_preprocess_data(
-            file_path
+        column_transformer, X_train, X_val, X_test, y_train, y_val, y_test = (
+            load_and_preprocess_data(file_path)
         )
         logger.success("Data loaded and preprocessed successfully.")
 
@@ -88,9 +88,13 @@ def main(cfg: DictConfig):
 
         # Predict sector for a new company
         logger.info("Predicting sector for a new company...")
-        new_company_transformed = preprocess_new_company(cfg.api.new_company, column_transformer)
+        new_company_transformed = preprocess_new_company(
+            cfg.api.new_company, column_transformer
+        )
         sector_index = predict_sector(model, new_company_transformed)
-        sector_name = pd.get_dummies(pd.read_csv(file_path)["Sector"]).columns[sector_index]
+        sector_name = pd.get_dummies(pd.read_csv(file_path)["Sector"]).columns[
+            sector_index
+        ]
         wandb.log({"predicted_sector": sector_name})
         logger.success(f"Predicted Sector: {sector_name}")
 

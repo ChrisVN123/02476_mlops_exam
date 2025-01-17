@@ -53,7 +53,9 @@ def train_model(
         val_losses.append(val_loss / len(val_loader))
 
         # Print and log progress
-        print(f"Epoch {epoch+1}/{epochs}, Train Loss: {train_losses[-1]:.4f}, Val Loss: {val_losses[-1]:.4f}")
+        print(
+            f"Epoch {epoch+1}/{epochs}, Train Loss: {train_losses[-1]:.4f}, Val Loss: {val_losses[-1]:.4f}"
+        )
 
         if log_to_wandb:
             wandb.log(
