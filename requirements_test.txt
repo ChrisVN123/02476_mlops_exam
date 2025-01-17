@@ -6,7 +6,7 @@ flake8==7.1.1
 #isort
 isort==5.13.2
 # testing
-pytest==7.4.3
+pytest==8.3.4
 
 # linting
 ruff==0.1.3
