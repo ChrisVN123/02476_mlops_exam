@@ -1,14 +1,17 @@
+import pickle
+
 import hydra
 import pandas as pd
 import torch
 import wandb  # Import Weights & Biases
 from api import predict_sector, preprocess_new_company
-from data import load_and_preprocess_data
 from evaluate import evaluate_model
 from loguru import logger
 from model import SectorClassifier
 from omegaconf import DictConfig
 from train import create_dataloader, train_model, visualize_training
+
+from data import load_and_preprocess_data
 
 # Configure the logger
 logger.add("results/app.log", level="DEBUG", rotation="10 MB")
@@ -82,7 +85,9 @@ def main(cfg: DictConfig):
 
         # Save the model
         model_path = cfg.model.save_path
-        torch.save(model.state_dict(), model_path)
+        torch.save(model.state_dict(), f"{model_path}/model.pth")
+        with open(f"{model_path}/model.pkl", "wb") as file:
+            pickle.dump(f"{model_path}/model.pth", file)
         wandb.save(model_path)  # Save the model artifact to W&B
         logger.info(f"Model saved to {model_path}")
 
