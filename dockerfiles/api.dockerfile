@@ -1,8 +1,9 @@
 # Base image
 FROM python:3.11-slim
 
-RUN apt-get update && apt-get install -y \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN RUN apt update && \
+apt install --no-install-recommends -y build-essential gcc && \
+apt clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /
 
