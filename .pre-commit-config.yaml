@@ -1,22 +1,8 @@
-# See https://pre-commit.com for more information
-# See https://pre-commit.com/hooks.html for more hooks
 repos:
-  - repo: https://github.com/psf/black
-    rev: 24.8.0  # Use the latest version of black
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.9.2
     hooks:
-      - id: black
-        exclude: \.csv$
-
-  - repo: https://github.com/pycqa/flake8
-    rev: 7.1.1 # Use the latest version of flake8
-    hooks:
-      - id: flake8
-        exclude: \.csv$
-
-  - repo: https://github.com/PyCQA/isort
-    rev: 5.13.2  # Use the latest version of isort
-    hooks:
-      - id: isort
+      - id: ruff
         exclude: \.csv$
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
