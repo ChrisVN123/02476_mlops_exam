@@ -2,10 +2,11 @@ name: Pre-commit CI
 
 on:
   pull_request:
-    branches: [main]
+    branches:
+      - main
   push:
-    branches: [main]
-
+    branches:
+      - main
 jobs:
   pre-commit:
     name: Check pre-commit
