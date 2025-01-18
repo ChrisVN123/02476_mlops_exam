@@ -1,13 +1,16 @@
 coverage
 dvc
 dvc-gdrive
+dvc_gs
 fastapi==0.115.6
+fastapi
 hydra-core
 kagglehub==0.3.6
 loguru
 matplotlib==3.10.0
 numpy<2
 pandas==2.2.3
+pre-commit == 4.0.1
 scikit-learn==1.6.0
 # Editable
 torch==2.2.2

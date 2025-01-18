@@ -1,10 +1,6 @@
 autopep8==1.5.7
-black==24.8.0
 coverage==7.6.9
-flake8==7.1.1
 
-#isort
-isort==5.13.2
 # testing
 pytest==7.4.3
 
