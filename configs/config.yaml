@@ -10,7 +10,7 @@ model:
   architecture: resnet50
   pretrained: true
   num_classes: 10
-  save_path: ${hydra:runtime.cwd}/models/sector_classification_model.pth
+  save_path: ${hydra:runtime.cwd}/models
 
 data:
   raw_path: ${hydra:runtime.cwd}/data/raw/sp500_companies.csv

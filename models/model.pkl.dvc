@@ -1,0 +1,9 @@
+outs:
+- md5: 0842fff7e9bdae533ebda2214d99a06c
+  size: 116
+  hash: md5
+  path: model.pkl
+  cloud:
+    cloud:
+      etag: 0890d9de86e2fe8a031001
+      version_id: '1737185973218448'

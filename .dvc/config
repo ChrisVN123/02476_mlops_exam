@@ -1,5 +1,10 @@
 [core]
-    remote = cloud
+remote = cloud
+autostage = true
+
 ['remote "cloud"']
-    url = gs://exam_mlops_data_bucket/dvc
-    version_aware = true
+url = gs://exam_mlops_data_bucket/dvc
+version_aware = true
+
+['remote "model"']
+url = gs://sector-model/
