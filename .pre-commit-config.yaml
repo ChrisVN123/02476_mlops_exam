@@ -3,6 +3,9 @@ repos:
     rev: v0.9.2
     hooks:
       - id: ruff
+        args: ["--fix"]
+        stages: [commit]  # Add this line to apply fixes during commit
+        always_run: true  # Run the hook on every commit, even with no staged changes
         exclude: \.csv$
 
   - repo: https://github.com/pre-commit/pre-commit-hooks

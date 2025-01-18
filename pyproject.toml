@@ -22,12 +22,15 @@ dev = {file = ['requirements_dev.txt']}
 
 [tool.ruff]
 line-length = 120
+fix = true  # Enables auto-fixing for compatible rules
+
+# Enable specific rule sets (equivalent to flake8, isort, etc.)
+[tool.ruff.lint]
+select = ["E", "F", "I"]  #
+
 
 [tool.coverage.run]
 omit = ["tests/*"]
 
 [project.scripts]
 train = "my_project.train:main"
-
-[tool.isort]
-profile = "black"
