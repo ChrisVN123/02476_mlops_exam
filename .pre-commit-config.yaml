@@ -30,3 +30,5 @@ repos:
     -   id: debug-statements
     -   id: check-merge-conflict
     -   id: requirements-txt-fixer
+    -   id: end-of-file-fixer
+    stages: [commit]
