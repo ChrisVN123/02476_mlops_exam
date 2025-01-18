@@ -31,3 +31,4 @@ train = "my_project.train:main"
 
 [tool.isort]
 profile = "black"
+skip = ["src/exam_project/train_model.py"]
