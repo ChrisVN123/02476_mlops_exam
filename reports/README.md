@@ -79,7 +79,7 @@ will check the repositories and the code to verify your answers.
 * [X] Add caching and multi-os/python/pytorch testing to your continuous integration (M17) <!--- Harris we only need implement pytorch version test but lets do it in the end -->
 * [X] Add a linting step to your continuous integration (M17) <!--- Harris -->
 * [ ] Add pre-commit hooks to your version control setup (M18) <!--- Harris -->
-* [ ] Add a continues workflow that triggers when data changes (M19) <!--- Fabian -->
+* [X] Add a continues workflow that triggers when data changes (M19) <!--- Fabian -->
 * [ ] Add a continues workflow that triggers when changes to the model registry is made (M19) <!--- Fabian -->
 * [X] Create a data storage in GCP Bucket for your data and link this with your data version control setup (M21) <!--- Christian -->
 * [ ] Create a trigger workflow for automatically building your docker images (M21) <!--- Christian -->
@@ -143,7 +143,7 @@ s201725, s224397, s224411
 >
 > Answer:
 
---- question 3 fill here ---
+--- We used the third-party framework black installed by pip, which is a python formatter supporting the PEP8 formatter. Black differs from other formatting frameworks like ruff by not simultaneously being a linter, which means black does not check for errors in the code. For this we used ruff and flake8. The reason for including black is its wider application for formatting compared to ruff. Both of them are optimized regarding speed even though ruff might be a bit faster due to it being programmed in Rust, while black is made in python.   ---
 
 ## Coding environment
 
@@ -163,7 +163,7 @@ s201725, s224397, s224411
 >
 > Answer:
 
---- A new memeber should first clone the repository and then make a virtual environment and install the packages from the requirements.txt file...  ---
+--- A new memeber should first clone the repository and then make a virtual environment to avoid conflicts with different setups. In the virtual environment the packages from the requirements.txt file should be installed. This makes sure each member uses the same versions of each library and framework, which was used to write the code, so the code should run smoothly.  ---
 
 ### Question 5
 
