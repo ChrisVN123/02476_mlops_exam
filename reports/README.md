@@ -78,8 +78,8 @@ will check the repositories and the code to verify your answers.
 * [X] Get some continuous integration running on the GitHub repository (M17) <!--- Harris -->
 * [X] Add caching and multi-os/python/pytorch testing to your continuous integration (M17) <!--- Harris we only need implement pytorch version test but lets do it in the end -->
 * [X] Add a linting step to your continuous integration (M17) <!--- Harris -->
-* [ ] Add pre-commit hooks to your version control setup (M18) <!--- Harris -->
-* [ ] Add a continues workflow that triggers when data changes (M19) <!--- Fabian -->
+* [X] Add pre-commit hooks to your version control setup (M18) <!--- Harris -->
+* [X] Add a continues workflow that triggers when data changes (M19) <!--- Fabian -->
 * [ ] Add a continues workflow that triggers when changes to the model registry is made (M19) <!--- Fabian -->
 * [X] Create a data storage in GCP Bucket for your data and link this with your data version control setup (M21) <!--- Christian -->
 * [ ] Create a trigger workflow for automatically building your docker images (M21) <!--- Christian -->
