@@ -1,10 +1,13 @@
 name: DVC Workflow
 
 on:
+  push:
+    branches:
+      - main
+      - ChangeTracker
   pull_request:
     branches:
       - main
-      - workflow
     paths:
       - '**/*.dvc'
       - '.dvc/**'
