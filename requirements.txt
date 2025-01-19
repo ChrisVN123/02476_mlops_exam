@@ -1,6 +1,7 @@
 coverage
 dvc
 dvc-gdrive
+dvc_gs
 fastapi==0.115.6
 hydra-core
 kagglehub==0.3.6

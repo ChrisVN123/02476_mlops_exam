@@ -1,3 +1,5 @@
+import pickle
+
 import hydra
 import pandas as pd
 import torch
@@ -82,7 +84,9 @@ def main(cfg: DictConfig):
 
         # Save the model
         model_path = cfg.model.save_path
-        torch.save(model.state_dict(), model_path)
+        torch.save(model.state_dict(), f"{model_path}/model.pth")
+        with open(f"{model_path}/model.pkl", "wb") as file:
+            pickle.dump(f"{model_path}/model.pth", file)
         wandb.save(model_path)  # Save the model artifact to W&B
         logger.info(f"Model saved to {model_path}")
 

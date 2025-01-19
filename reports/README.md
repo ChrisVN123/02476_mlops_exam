@@ -118,7 +118,7 @@ will check the repositories and the code to verify your answers.
 >
 > Answer:
 
---- question 1 fill here ---
+--- 24 ---
 
 ### Question 2
 > **Enter the study number for each member in the group**
@@ -163,7 +163,7 @@ s201725, s224397, s224411
 >
 > Answer:
 
---- question 4 fill here ---
+--- A new memeber should first clone the repository and then make a virtual environment and install the packages from the requirements.txt file...  ---
 
 ### Question 5
 
@@ -194,7 +194,7 @@ s201725, s224397, s224411
 >
 > Answer:
 
---- question 6 fill here ---
+--- .... In larger projects proper rules makes it easier for others to understand the code and for you to manage your code.  ---
 
 ## Version control
 
@@ -243,7 +243,7 @@ s201725, s224397, s224411
 >
 > Answer:
 
---- question 9 fill here ---
+--- We created a branch each time we implemented a new feature and used pull requests to check for errors in our implementations with the use of pytests. Working on different branches provide security to the main branch, so mergeconflicts are less likely to happen. Pullrequests helps catching erros before they are merged into the main branch. After merging the branch and main we deleted the branch to avoid conflicts when merging in the future.  ---
 
 ### Question 10
 
