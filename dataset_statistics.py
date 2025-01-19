@@ -1,11 +1,8 @@
-import hydra
 import matplotlib.pyplot as plt
 import pandas as pd
-from omegaconf import DictConfig
 
 
-@hydra.main(config_path="configs", config_name="config.yaml", version_base="1.2")
-def dataset_statistics(cfg: DictConfig, report_path: str = "report.md") -> None:
+def dataset_statistics(report_path: str = "report.md") -> None:
     """
     Generate dataset statistics and save to a markdown report.
 
@@ -13,7 +10,7 @@ def dataset_statistics(cfg: DictConfig, report_path: str = "report.md") -> None:
         report_path (str): Path to save the generated markdown report.
     """
     # Load the dataset
-    data_path = cfg.data.raw_path
+    data_path = "data/Graw/sp500_companies.csv"
     df = pd.read_csv(data_path)
 
     # Open a markdown file to write the report
