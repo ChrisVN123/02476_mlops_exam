@@ -1,41 +1,76 @@
 name: DVC Workflow
 
 on:
+  push:
+    branches:
+      - main
+      - ChangeTracker
   pull_request:
     branches:
-    - main
+      - main
     paths:
-    - '**/*.dvc'
-    - '.dvc/**'
+      - '**/*.dvc'
+      - '.dvc/**'
+
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
-  run_data_checker:
+  dataset_statistics:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      # Step 1: Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: 3.11
-        cache: 'pip'
-        cache-dependency-path: setup.py
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+          cache: 'pip'
+          cache-dependency-path: setup.py
 
-    - name: Install dependencies
-      run: |
-        make dev_requirements
-        pip list
+      # Step 3: Authenticate with GCP
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-    - name: Auth with GCP
-      uses: google-github-actions/auth@v2
-      with:
-        credentials_json: ${{ secrets.GCP_SA_KEY }}
+      # Step 4: Set up gcloud SDK
+      - name: Set up gcloud Cloud SDK environment
+        uses: google-github-actions/setup-gcloud@v2.1.2
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
 
-    - name: Pull data
-      run: |
-        dvc pull --no-run-cache
+      # Step 5: Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install -U pip setuptools wheel
+          pip install -e .
+          pip install -r requirements.txt
+          pip install -r requirements_dev.txt
+          pip install -r requirements_test.txt
+          pip list
 
-    - name: Check data statistics
-      run: |
-        python dataset_statistics.py
+      # Step 6: Download test data from Google Cloud Storage
+      - name: Download test data from GCP bucket
+        run: |
+          gsutil cp -r gs://exam_mlops_data_bucket/data/ ./data/Graw
+
+      # Step 7: Check dataset statistics and generate report
+      - name: Check dataset statistics & generate report
+        run: |
+          python dataset_statistics.py > report.md
+
+      # Step 8: Setup CML for commenting
+      - name: Setup CML
+        uses: iterative/setup-cml@v2
+
+      # Step 9: Comment on PR with report
+      - name: Comment on PR
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cml comment create report.md --watermark-title="Data Checker"
