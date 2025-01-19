@@ -12,6 +12,10 @@ on:
       - '**/*.dvc'
       - '.dvc/**'
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   dataset_statistics:
     runs-on: ubuntu-latest
