@@ -1,78 +1,63 @@
-import os
-
 import matplotlib.pyplot as plt
 import pandas as pd
 import typer
 
 
-def dataset_statistics(data_path: str = "data/raw/sp500_companies.csv") -> None:
-    """Compute basic dataset statistics and checks, including other files in the directory."""
+def dataset_statistics(
+    data_path: str = "data/raw/sp500_companies.csv", report_path: str = "report.md"
+) -> None:
+    """
+    Generate dataset statistics and save to a markdown report.
 
-    # Check if file exists
-    if not os.path.exists(data_path):
-        raise FileNotFoundError(f"Data file not found at {data_path}")
-
-    # Check for other files in the data/raw/ directory
-    raw_data_dir = os.path.dirname(data_path)
-    raw_files = os.listdir(raw_data_dir)
-    print(f"\nFiles in {raw_data_dir}:")
-    print(raw_files)
-
-    # Ensure only the expected file exists
-    if len(raw_files) > 1:
-        print("Warning: Other files found in the directory. Ensure they are intended:")
-        for file in raw_files:
-            if file != os.path.basename(data_path):
-                print(f" - {file}")
-
+    Args:
+        data_path (str): Path to the dataset CSV file.
+        report_path (str): Path to save the generated markdown report.
+    """
     # Load the dataset
-    print(f"\nLoading dataset from: {data_path}")
-    data = pd.read_csv(data_path)
+    df = pd.read_csv(data_path)
 
-    # General dataset checks
-    print(f"\nDataset file name: {os.path.basename(data_path)}")
-    print(f"Number of rows: {data.shape[0]}")
-    print(f"Number of columns: {data.shape[1]}")
-    print(f"Columns: {list(data.columns)}")
+    # Open a markdown file to write the report
+    with open(report_path, "w") as report:
+        report.write("# Dataset Statistics\n\n")
+        report.write(f"**Dataset**: `{data_path}`\n\n")
+        report.write(f"**Number of Rows**: {len(df)}\n\n")
+        report.write(f"**Number of Columns**: {len(df.columns)}\n\n")
+        report.write("**Columns**:\n")
+        for col in df.columns:
+            report.write(f"- {col}\n")
+        report.write("\n")
 
-    # Check for missing values
-    missing_values = data.isnull().sum().sum()
-    print(f"\nTotal missing values: {missing_values}")
+        # Generate Sector Distribution Visualization
+        if "Sector" in df.columns:
+            plt.figure(figsize=(10, 5))
+            df["Sector"].value_counts().plot(kind="bar")
+            plt.title("Sector Distribution")
+            plt.xlabel("Sector")
+            plt.ylabel("Count")
+            plt.savefig("sector_distribution.png")
+            plt.close()
+            report.write("### Sector Distribution\n")
+            report.write("![Sector Distribution](./sector_distribution.png)\n\n")
+        else:
+            report.write("### Sector Distribution\n")
+            report.write("Sector column not found in the dataset.\n\n")
 
-    if missing_values > 0:
-        print("Columns with missing values:")
-        print(data.isnull().sum()[data.isnull().sum() > 0])
+        # Summary of missing values
+        missing_values = df.isnull().sum()
+        if missing_values.any():
+            report.write("### Missing Values\n")
+            report.write("The following columns have missing values:\n")
+            for col, num_missing in missing_values.items():
+                if num_missing > 0:
+                    report.write(f"- {col}: {num_missing} missing values\n")
+            report.write("\n")
+        else:
+            report.write("### Missing Values\n")
+            report.write("No missing values in the dataset.\n\n")
 
-    # Sample data preview
-    print("\nSample of the data:")
-    print(data.head())
-
-    # Distribution of a categorical column (e.g., Sector)
-    if "Sector" in data.columns:
-        sector_counts = data["Sector"].value_counts()
-        print("\nSector distribution:")
-        print(sector_counts)
-        sector_counts.plot(kind="bar", title="Sector Distribution")
-        plt.xlabel("Sector")
-        plt.ylabel("Count")
-        plt.savefig("results/sector_distribution.png")
-        plt.close()
-        print("Sector distribution plot saved as 'sector_distribution.png'.")
-
-    # Check dataset size consistency
-    expected_columns = [
-        "Exchange",
-        "Symbol",
-        "Industry",
-        "Currentprice",
-        "Marketcap",
-        "Sector",
-    ]
-    if all(column in data.columns for column in expected_columns):
-        print("\nAll expected columns are present.")
-    else:
-        missing_columns = [col for col in expected_columns if col not in data.columns]
-        print(f"\nMissing columns: {missing_columns}")
+        # File size information
+        file_size = df.memory_usage(deep=True).sum() / (1024**2)  # Convert bytes to MB
+        report.write(f"**Dataset File Size**: {file_size:.2f} MB\n")
 
 
 if __name__ == "__main__":
