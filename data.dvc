@@ -2,6 +2,27 @@ outs:
 - hash: md5
   path: data
   files:
+  - relpath: processed/X_test.csv
+    md5: 311b13a383cf4953669f05c121ed74e1
+    size: 24405
+    cloud:
+      cloud:
+        etag: 08dbd2acfb88ff8a031001
+        version_id: '1737196418312539'
+  - relpath: processed/X_train.csv
+    md5: 311b13a383cf4953669f05c121ed74e1
+    size: 24405
+    cloud:
+      cloud:
+        etag: 08d0bda8fb88ff8a031001
+        version_id: '1737196418244304'
+  - relpath: processed/y_test.csv
+    md5: 4732de92b8167e7ab2ee47ceac1929c7
+    size: 4573
+    cloud:
+      cloud:
+        etag: 08b4d49ffb88ff8a031001
+        version_id: '1737196418099764'
   - relpath: raw/sp500_companies.csv
     md5: a14ec99ebde36dc6c88cae79ee1c4c4f
     size: 803820

@@ -1,7 +1,4 @@
 coverage
-dvc
-dvc-gdrive
-dvc_gs
 fastapi==0.115.6
 fastapi
 hydra-core
@@ -9,16 +6,10 @@ kagglehub==0.3.6
 loguru
 matplotlib==3.10.0
 numpy<2
-onnx
 onnxruntime
-onnxscript
 pandas==2.2.3
 scikit-learn==1.6.0
-# Editable
 torch==2.2.2
-torch_tb_profiler
-torchvision==0.17.2
-transformers==4.47.1
+# Editable
 typer==0.15.1
 uvicorn==0.34.0
-wandb
