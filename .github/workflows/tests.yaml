@@ -59,6 +59,8 @@ jobs:
         run: ls
       - name: Ensure data directory exists
         run: mkdir -p ./data
+      - name: Change to data directory
+        run: cd data
       - name: Get directory content (ls)
         run: ls
 
