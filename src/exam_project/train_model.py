@@ -83,10 +83,29 @@ def main(cfg: DictConfig):
         wandb.log({"test_loss": test_loss, "test_accuracy": test_accuracy})
 
         # Save the model
+        model.eval()
         model_path = cfg.model.save_path
         torch.save(model.state_dict(), f"{model_path}/model.pth")
         with open(f"{model_path}/model.pkl", "wb") as file:
             pickle.dump(f"{model_path}/model.pth", file)
+
+        # Save the model as a .onnx file
+        onnx_model_path = f"{model_path}/model.onnx"
+        dummy_input = torch.randn(1, input_size)  # Create a dummy input for the export
+        torch.onnx.export(
+            model,  # The trained model
+            dummy_input,  # Dummy input tensor
+            onnx_model_path,  # File path to save the .onnx model
+            export_params=True,  # Store the trained parameter weights
+            input_names=["input"],  # Input tensor names
+            output_names=["output"],  # Output tensor names
+            dynamic_axes={  # Dynamic axes for batch size
+                "input": {0: "batch_size"},
+                "output": {0: "batch_size"},
+            },
+            opset_version=11,  # ONNX opset version (ensure compatibility)
+        )
+        logger.info(f"Model exported as ONNX to {onnx_model_path}")
         wandb.save(model_path)  # Save the model artifact to W&B
 
         artifact_filepath = model_path

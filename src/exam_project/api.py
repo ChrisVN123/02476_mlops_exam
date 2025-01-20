@@ -1,6 +1,9 @@
 # src/exam_project/api.py
 import pandas as pd
 import torch
+from fastapi import FastAPI
+
+app = FastAPI()
 
 
 def preprocess_new_company(raw_data, column_transformer):
