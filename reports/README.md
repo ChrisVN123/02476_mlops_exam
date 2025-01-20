@@ -81,7 +81,7 @@ will check the repositories and the code to verify your answers.
 * [ ] Add pre-commit hooks to your version control setup (M18) <!--- Harris -->
 * [X] Add pre-commit hooks to your version control setup (M18) <!--- Harris -->
 * [X] Add a continues workflow that triggers when data changes (M19) <!--- Fabian -->
-* [ ] Add a continues workflow that triggers when changes to the model registry is made (M19) <!--- Fabian -->
+* [X] Add a continues workflow that triggers when changes to the model registry is made (M19) <!--- Fabian -->
 * [X] Create a data storage in GCP Bucket for your data and link this with your data version control setup (M21) <!--- Christian -->
 * [ ] Create a trigger workflow for automatically building your docker images (M21) <!--- Christian -->
 * [ ] Get your model training in GCP using either the Engine or Vertex AI (M21) <!--- Christian -->
@@ -107,10 +107,10 @@ will check the repositories and the code to verify your answers.
 
 * [ ] Write some documentation for your application (M32)
 * [ ] Publish the documentation to GitHub Pages (M32)
-* [ ] Revisit your initial project description. Did the project turn out as you wanted?
+* [X] Revisit your initial project description. Did the project turn out as you wanted?
 * [ ] Create an architectural diagram over your MLOps pipeline
-* [ ] Make sure all group members have an understanding about all parts of the project
-* [ ] Uploaded all your code to GitHub
+* [X] Make sure all group members have an understanding about all parts of the project
+* [X] Uploaded all your code to GitHub
 
 ## Group information
 
@@ -560,8 +560,8 @@ s201725, s224397, s224411
 >
 > Answer:
 
---- question 30 fill here ---
-
+One of the biggest challenges, which we saw already in the exercises, was the amount of time it takes in general to train the model, build docker images, etc. We therefore chose a smaller dataset and model to focus more intensely on the setup around the model, such as cloud, logging, workflow, tests, etc.
+Furthermore, we used a collaboration setup where we initally made 3 branches, this did create quite a few challenges as it was hard to make sure all branches was up to date before merging them. To solve this we changed method by making a new branch every time we were to make a new feature, then made a pull request for testing before we merged. Additionally we created rules that the code to comply with before commiting to make sure PEP8 standards were met, securing that we remember to pull before pushing and that one could not push directly to main branch but had to branch and make a pull request first for testing. This setup worked quite a lot better, at least when we remember to do all the steps in the correct way ie. pulling before merging.
 ### Question 31
 
 > **State the individual contributions of each team member. This is required information from DTU, because we need to**
