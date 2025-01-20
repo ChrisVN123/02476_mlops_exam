@@ -14,10 +14,12 @@ COPY README.md .
 COPY requirements.txt .
 COPY requirements_dev.txt .
 COPY models/ models/
-COPY data/ data/
+COPY data.dvc .
 
 #RUN pip install -r requirements.txt --no-cache-dir
+RUN dvc pull --no-run-cache
 RUN pip install -r requirements_api.txt --no-cache-dir
+
 #RUN pip install -e .
 #RUN pip install . --no-deps --no-cache-dir
 #ENTRYPOINT ["python", "-u", "src/exam_project/train.py"]
