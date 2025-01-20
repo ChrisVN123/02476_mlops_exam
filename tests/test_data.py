@@ -10,8 +10,9 @@ from tests.__init__ import _PATH_DATA  # Adjust this import to your actual utils
 def test_load_and_preprocess_data():
     """Test that the data is loaded and preprocessed correctly."""
     # Load and preprocess the data
-    column_transformer, X_train, X_val, X_test, y_train, y_val, y_test = (
-        load_and_preprocess_data(f"{_PATH_DATA}/sp500_companies.csv")
+    print(f"{_PATH_DATA}/raw/sp500_companies.csv")
+    column_transformer, X_train, X_val, X_test, y_train, y_val, y_test, sector_names = (
+        load_and_preprocess_data(f"{_PATH_DATA}/raw/sp500_companies.csv")
     )
 
     # Assert that the data is loaded and split correctly
