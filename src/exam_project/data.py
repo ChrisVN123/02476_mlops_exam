@@ -8,6 +8,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from torch.utils.data import Dataset
 
+from exam_project.__init__ import (  # Adjust this import to your actual utils module
+    _PATH_DATA,
+)
+
 
 class MyDataset(Dataset):
     """My custom dataset."""
@@ -73,10 +77,10 @@ def load_and_preprocess_data(file_path: str = "data/raw/sp500_companies.csv"):
     y_encoded = pd.get_dummies(y).values
     sector_names = pd.get_dummies(y).columns.tolist()  # Get the sector names
     pd.DataFrame(sector_names, columns=["Sector"]).to_csv(
-        "data/processed/sector_names.csv", index=False
+        f"{_PATH_DATA}/processed/sector_names.csv", index=False
     )
     pd.DataFrame(sector_names, columns=["Sector"]).to_csv(
-        "data/processed/sector_names.csv", index=False
+        f"{_PATH_DATA}/processed/sector_names.csv", index=False
     )
 
     X_train, X_temp, y_train, y_temp = train_test_split(
@@ -93,12 +97,12 @@ def load_and_preprocess_data(file_path: str = "data/raw/sp500_companies.csv"):
     )
 
     # Ensure the processed directory exists
-    processed_dir = "data/processed"
+    processed_dir = f"{_PATH_DATA}/processed"
     if not os.path.exists(processed_dir):
         os.makedirs(processed_dir)
 
-    pd.DataFrame(X_test).to_csv("data/processed/X_test.csv", index=False)
-    pd.DataFrame(y_test).to_csv("data/processed/y_test.csv", index=False)
+    pd.DataFrame(X_test).to_csv(f"{_PATH_DATA}/processed/X_test.csv", index=False)
+    pd.DataFrame(y_test).to_csv(f"{_PATH_DATA}/processed/y_test.csv", index=False)
     return (
         column_transformer,
         X_train,
