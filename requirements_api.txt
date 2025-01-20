@@ -1,4 +1,6 @@
 coverage
+dvc
+dvc_gs
 fastapi==0.115.6
 fastapi
 hydra-core
