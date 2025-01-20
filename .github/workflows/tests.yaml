@@ -65,7 +65,7 @@ jobs:
         run: ls
 
       - name: Download test data from Google Cloud Storage
-        run: gsutil cp -r gs://exam_mlops_data_bucket/dvc/data/ ./data/
+        run: gsutil cp -r gs://exam_mlops_data_bucket/dvc/data/* ./data/
 
       - name: Run tests & coverage
         run: |
