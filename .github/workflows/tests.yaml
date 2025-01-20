@@ -55,6 +55,8 @@ jobs:
           pip install -r requirements_test.txt
           pip list
 
+      - name: Ensure data directory exists
+        run: mkdir -p ./data
 
       - name: Download test data from Google Cloud Storage
         run: gsutil cp -r gs://exam_mlops_data_bucket/dvc/data/ ./data
