@@ -20,7 +20,7 @@ logger.add("results/app.log", level="DEBUG", rotation="10 MB")
 def main(cfg: DictConfig):
     try:
         # Initialize W&B
-        wandb.init(
+        run = wandb.init(
             entity="dtumlops_24",
             project="sector-classification",
             config={
@@ -88,6 +88,17 @@ def main(cfg: DictConfig):
         with open(f"{model_path}/model.pkl", "wb") as file:
             pickle.dump(f"{model_path}/model.pth", file)
         wandb.save(model_path)  # Save the model artifact to W&B
+
+        artifact_filepath = model_path
+
+        logged_artifact = run.log_artifact(
+            artifact_filepath, "artifact-name", type="model"
+        )
+        run.link_artifact(
+            artifact=logged_artifact,
+            target_path="dtu_mlops_24/wandb-registry-ExamMLOps/test_collection",
+        )
+
         logger.info(f"Model saved to {model_path}")
 
         # Predict sector for a new company
