@@ -34,7 +34,7 @@
 
 #       - name: Build Docker image
 #         run: |
-#           docker build -t europe-west1-docker.pkg.dev/$GCP_PROJECT_ID/my-container/cloudbuild:latest -f <path-to-dockerfile> .
+#           docker build -t europe-west1-docker.pkg.dev/$GCP_PROJECT_ID/my-container/cloudbuild:latest -f dockerfiles/cloudtrain.dockerfile .
 
 #       - name: Push Docker image to GCP
 #         run: |

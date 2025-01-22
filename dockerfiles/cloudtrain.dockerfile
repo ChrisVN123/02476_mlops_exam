@@ -25,4 +25,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install -e .
 
 # Specify the entry point for running the training script
-ENTRYPOINT ["python", "src/exam_project/train_model.py"]
+ENTRYPOINT ["python", "-m", "exam_project.train_model"]
