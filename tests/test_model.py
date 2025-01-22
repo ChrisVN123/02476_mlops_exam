@@ -1,7 +1,7 @@
 import pytest
 import torch
 
-from src.exam_project.model import SectorClassifier
+from src.exam_project.model import SectorClassifier # type: ignore
 
 
 # Fixture to create a test model

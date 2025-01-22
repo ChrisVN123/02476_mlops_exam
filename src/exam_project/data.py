@@ -1,53 +1,65 @@
 import os
-from pathlib import Path
-
+import subprocess  # To run DVC commands
+import yaml
 import numpy as np
 import pandas as pd
-from sklearn.compose import ColumnTransformer
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
-from torch.utils.data import Dataset
+from sklearn.compose import ColumnTransformer # type: ignore
+from sklearn.model_selection import train_test_split # type: ignore
+from sklearn.preprocessing import OneHotEncoder, StandardScaler # type: ignore
 
-from src.exam_project.__init__ import (  # Adjust this import to your actual utils module
-    _PATH_DATA,
-)
+from src.exam_project.__init__ import (_PATH_DATA) # type: ignore
 
-
-class MyDataset(Dataset):
-    """My custom dataset."""
-
-    def __init__(self, raw_data_path: Path) -> None:
-        self.data_path = raw_data_path
-
-    def __len__(self) -> int:
-        """Return the length of the dataset."""
-
-    def __getitem__(self, index: int):
-        """Return a given sample from the dataset."""
-
-    def preprocess(self, output_folder: Path) -> None:
-        """Preprocess the raw data and save it to the output folder."""
-
-
-def preprocess(raw_data_path: Path, output_folder: Path) -> None:
-    print("Preprocessing data...")
-    dataset = MyDataset(raw_data_path)
-    dataset.preprocess(output_folder)
-
-
-def load_and_preprocess_data(file_path: str = "data/raw/sp500_companies.csv"):
+def load_and_preprocess_data(file_path: str = "data/raw/sp500_companies.csv", wandb_run=None, work_dir = None):
     data = pd.read_csv(file_path)
+
+    try:
+        # 1. Add the file to DVC
+        print(f"Tracking file {file_path} with DVC...")
+        subprocess.run(["dvc", "add", file_path], check=True)
+        subprocess.run(["dvc", "push"], check=True)
+        print(f"File {file_path} successfully pushed to remote storage.")
+        
+        # 2. Read the generated .dvc file
+        dvc_file_path = f"{work_dir}/data.dvc"  # Ensure it matches what DVC actually created
+        if not os.path.isfile(dvc_file_path):
+            raise FileNotFoundError(f"Could not find DVC metafile: {dvc_file_path}")
+        
+        with open(dvc_file_path, "r") as f:
+            dvc_content = yaml.safe_load(f)
+        print(f"DVC content: {dvc_content}")
+
+
+        # 4. Optional: log to wandb
+        if wandb_run:
+            wandb_run.log({"raw_data_path": file_path, "dvc_content": dvc_content})
+            dvc_file_path = os.path.join(wandb_run.dir, "dvc_content.yaml")
+            with open(dvc_file_path, "w") as f:
+                yaml.safe_dump(dvc_content, f)
+
+
+
+
+
+    except subprocess.CalledProcessError as e:
+        print(f"Error running DVC command: {e}")
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+
+
+    
+        
     data = data.drop(
-        columns=[
-            "Longbusinesssummary",
-            "City",
-            "State",
-            "Country",
-            "Shortname",
-            "Longname",
-        ]
+    columns=[
+        "Longbusinesssummary",
+        "City",
+        "State",
+        "Country",
+        "Shortname",
+        "Longname",
+    ]
     )
     data = data.dropna()
+    # Log dataset metadata if wandb_run is active
 
     X = data.drop(columns=["Sector"])
     y = data["Sector"]
