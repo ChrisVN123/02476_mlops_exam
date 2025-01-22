@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from torch.utils.data import Dataset
 
-from exam_project.__init__ import (  # Adjust this import to your actual utils module
+from src.exam_project.__init__ import (  # Adjust this import to your actual utils module
     _PATH_DATA,
 )
 
