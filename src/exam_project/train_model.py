@@ -4,13 +4,13 @@ import hydra
 import pandas as pd
 import torch
 import wandb  # Import Weights & Biases
-from api import predict_sector, preprocess_new_company
-from data import load_and_preprocess_data
-from evaluate import evaluate_model
+from .api import predict_sector, preprocess_new_company
+from .data import load_and_preprocess_data
+from .evaluate import evaluate_model
 from loguru import logger
-from model import SectorClassifier
+from .model import SectorClassifier
 from omegaconf import DictConfig
-from train import create_dataloader, train_model, visualize_training
+from .train import create_dataloader, train_model, visualize_training
 
 # Configure the logger
 logger.add("results/app.log", level="DEBUG", rotation="10 MB")
@@ -41,7 +41,7 @@ def main(cfg: DictConfig):
         # Load and preprocess the dataset
         file_path = cfg.data.raw_path
         logger.info("Loading and preprocessing data...")
-        column_transformer, X_train, X_val, X_test, y_train, y_val, y_test = (
+        column_transformer, X_train, X_val, X_test, y_train, y_val, y_test, _ = (
             load_and_preprocess_data(file_path)
         )
         logger.success("Data loaded and preprocessed successfully.")
