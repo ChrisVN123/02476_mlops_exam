@@ -1,41 +1,65 @@
-# name: Build and Push Docker Image
+name: Build and Push Docker Image
 
-# on:
-#   push:
-#     branches:
-#       - main
-#       - GithubActionCloudData
-#   pull_request:
-#     branches:
-#       - main
+on:
+  push:
+    branches:
+      - main
+      - DockerCloud
+  pull_request:
+    branches:
+      - main
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
 
-# jobs:
-#   build_and_push:
-#     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v4
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-#       - name: Authenticate with Google Cloud
-#         uses: google-github-actions/auth@v1
-#         with:
-#           credentials_json: ${{ secrets.GCP_SA_KEY }}
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          export_default_credentials: true
 
-#       - name: Set up gcloud
-#         uses: google-github-actions/setup-gcloud@v2
-#         with:
-#           project_id: ${{ secrets.GCP_PROJECT_ID }}
-#           export_default_credentials: true
+      - name: Configure Docker for Google Cloud
+        run: |
+          gcloud auth configure-docker europe-west1-docker.pkg.dev
 
-#       - name: Configure Docker for Google Cloud
-#         run: |
-#           gcloud auth configure-docker europe-west1-docker.pkg.dev
+      - name: Get directory content (ls)
+        run: ls
+      - name: Ensure data directory exists
+        run: mkdir -p ./data
+      - name: Change to data directory
+        run: cd data
+      - name: Get directory content (ls)
+        run: ls
 
-#       - name: Build Docker image
-#         run: |
-#           docker build -t europe-west1-docker.pkg.dev/$GCP_PROJECT_ID/my-container/cloudbuild:latest -f dockerfiles/cloudtrain.dockerfile .
+      - name: Download test data from Google Cloud Storage
+        run: gsutil cp -r gs://exam_mlops_data_bucket/dvc/data/* ./data/
 
-#       - name: Push Docker image to GCP
-#         run: |
-#           docker push europe-west1-docker.pkg.dev/$GCP_PROJECT_ID/my-container/cloudbuild:latest
+      # Build the Docker image
+      - name: Build Docker image
+        run: |
+          docker build -t europe-west1-docker.pkg.dev/exammlops/my-container/cloudbuild:latest -f dockerfiles/cloudtrain.dockerfile .
+
+      # Push the Docker image to the container registry
+      - name: Push Docker image
+        run: |
+          docker push europe-west1-docker.pkg.dev/exammlops/my-container/cloudbuild:latest
+
+
+      # Build the Docker image api
+      - name: Build Docker image
+        run: |
+          docker build -t europe-west1-docker.pkg.dev/exammlops/my-container/api:new -f dockerfiles/api.dockerfile .
+
+      # Push the Docker image to the container registry api
+      - name: Push Docker image api
+        run: |
+          docker push europe-west1-docker.pkg.dev/exammlops/my-container/api:new
