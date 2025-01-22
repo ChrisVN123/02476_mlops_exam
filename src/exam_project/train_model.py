@@ -1,4 +1,3 @@
-import pickle
 
 import hydra
 import pandas as pd
@@ -6,6 +5,7 @@ import torch
 import wandb  # Import Weights & Biases
 from loguru import logger
 from omegaconf import DictConfig
+from hydra.utils import get_original_cwd
 
 from .api import predict_sector, preprocess_new_company
 from .data import load_and_preprocess_data
@@ -14,7 +14,7 @@ from .model import SectorClassifier
 from .train import create_dataloader, train_model, visualize_training
 
 # Configure the logger
-logger.add("results/app.log", level="DEBUG", rotation="10 MB")
+logger.add("reports/logs/app.log", level="DEBUG", rotation="10 MB")
 
 
 @hydra.main(config_path="../../configs", config_name="config.yaml", version_base="1.1")
@@ -44,7 +44,7 @@ def main(cfg: DictConfig):
         file_path = cfg.data.raw_path
         logger.info("Loading and preprocessing data...")
         column_transformer, X_train, X_val, X_test, y_train, y_val, y_test, _ = (
-            load_and_preprocess_data(file_path)
+            load_and_preprocess_data(file_path, run, get_original_cwd())
         )
         logger.success("Data loaded and preprocessed successfully.")
 
@@ -88,8 +88,6 @@ def main(cfg: DictConfig):
         model.eval()
         model_path = cfg.model.save_path
         torch.save(model.state_dict(), f"{model_path}/model.pth")
-        with open(f"{model_path}/model.pkl", "wb") as file:
-            pickle.dump(f"{model_path}/model.pth", file)
 
         # Save the model as a .onnx file
         onnx_model_path = f"{model_path}/model.onnx"

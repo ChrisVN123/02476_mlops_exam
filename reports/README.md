@@ -129,7 +129,7 @@ will check the repositories and the code to verify your answers.
 >
 > Answer:
 
-s201725, s224397, s224411
+--- s201725, s224397, s224411 ---
 
 ### Question 3
 > **A requirement to the project is that you include a third-party package not covered in the course. What framework**
@@ -142,8 +142,7 @@ s201725, s224397, s224411
 > *package to do ... and ... in our project*.
 >
 > Answer:
-### DENNE HER ER NOK IKKE Så god - ruff er jo langt hurtigere - UPDATE - jeg har ændret så vi kører på ruff - det er meget bedre!
---- We used the third-party framework black installed by pip, which is a python formatter supporting the PEP8 formatter. Black differs from other formatting frameworks like ruff by not simultaneously being a linter, which means black does not check for errors in the code. For this we used ruff and flake8. The reason for including black is its wider application for formatting compared to ruff. Both of them are optimized regarding speed even though ruff might be a bit faster due to it being programmed in Rust, while black is made in python.   ---
+--- We used the third-party framework mypy which is a static type checker for python code which checks for mismatches between the types annotated and how the variables and functions are being used. This can of course help catch errors but also make the code more readable and understandable, which is how we primarily used it. We only used it in the src/exam_project folder. We were limited by the fact that for some packages there was not any .pyi stub files which contains the necessary type information e.g. sklearn ---
 
 ## Coding environment
 
@@ -158,12 +157,20 @@ s201725, s224397, s224411
 > Recommended answer length: 100-200 words
 >
 > Example:
-> *We used ... for managing our dependencies. The list of dependencies was auto-generated using ... . To get a*
-> *complete copy of our development environment, one would have to run the following commands*
+> *
 >
 > Answer:
 
---- A new memeber should first clone the repository and then make a virtual environment to avoid conflicts with different setups. In the virtual environment the packages from the requirements.txt file should be installed. This makes sure each member uses the same versions of each library and framework, which was used to write the code, so the code should run smoothly.  ---
+--- We used Conda for managing our dependencies. The list of dependencies was auto-generated using "conda env export > environment.yml" To get a complete copy of our development environment, one would have to run the following commands: 
+1. Install conda or miniconda
+2. Clone the project repository
+3. Create environment using conda env create -f environment.yml
+
+If a new member does not want to use conda we added a requirements.txt file with all the dependencies listed. To install the dependencies one would have to run the following commands:
+1. Create virtual environment
+2. pip install -r requirements.txt
+
+Furthermore, we specified a requirements_api.txt file which our api.dockerfile used to limit the size and run time of the docker file ---
 
 ### Question 5
 
@@ -178,8 +185,9 @@ s201725, s224397, s224411
 > *experiments.*
 >
 > Answer:
+--- We have used the cookiecutter template 'mlops_template' from https://github.com/SkafteNicki/mlops_template. 
+We stuck to the template quite consistly and filled out all the folders from the template and almost only added extra folders when packages needed them such as the folder .dvc for our data version control setup,ruff_cahce for linting, .pytest_cahce for testing, configs for the configuration of the experiments etc. An exception to that is that we deleted the folder notebooks as we did not use jupyter notebook for this project. Furthermore, we also added a folder called logs in the reports folder to keep the logs from our training runs, and a folder performance_tests in the tests folder to keep the performance tests. ---
 
---- question 5 fill here ---
 
 ### Question 6
 
@@ -194,7 +202,7 @@ s201725, s224397, s224411
 >
 > Answer:
 
---- .... In larger projects proper rules makes it easier for others to understand the code and for you to manage your code.  ---
+--- We used ruff for linting and formating. We decidecd to use 120 charachters as the maximum line length. We also used the package mypy for typing checks as described in Q3. When we are working with larger more complex projects, where more people are involved, a standard way of writing your code becomes crucial. The PEP 8 style guide for python is a good example which also what ruff as a default complies with. When we have a standard way of linting, formatting and typing our code, it makes it much easier for anyone who at a later time has to read, understand and debug the code. Furthermore, IDEs can more effectively help with error detection when the code is formatted in a standard way. ---
 
 ## Version control
 
@@ -213,7 +221,7 @@ s201725, s224397, s224411
 >
 > Answer:
 
---- question 7 fill here ---
+--- In total we have implemented 8 tests divided across testing the data, the model, model perfomance and our api. They respectively focus on testing that the data is loaded and preprocessed correctly, that the model works as expected with regard to output shapes, gradient computation and saving, that the model is not too slow and that the api works as expected ---
 
 ### Question 8
 
@@ -228,7 +236,8 @@ s201725, s224397, s224411
 >
 > Answer:
 
---- question 8 fill here ---
+--- The total code coverage of code is 87%, which only includes the files data.py, api.py, model.py, which means that the files evaluate.py, train_model.py and train.py is not tested which is a clear weakness of our test setup. Even if the code coverage had been 100% we are of course still not sure that the code will be error free, since this still depends on the tests actulaly covering all the different possible sources of errors. We might have tests which only tests for very specific errors such as the fact that our NN returns the correct model shape, but this does not ensure that the model cannot run into other errors. 
+---
 
 ### Question 9
 
@@ -243,7 +252,10 @@ s201725, s224397, s224411
 >
 > Answer:
 
---- We created a branch each time we implemented a new feature and used pull requests to check for errors in our implementations with the use of pytests. Working on different branches provide security to the main branch, so mergeconflicts are less likely to happen. Pullrequests helps catching erros before they are merged into the main branch. After merging the branch and main we deleted the branch to avoid conflicts when merging in the future.  ---
+--- We created a branch each time we implemented a new feature and used pull requests to merge with the main branch. Working on different branches provide security to the main branch, such that what ends on the main branch is less likely to contain errors and it is easir to restore a version which is functional should a bug occur. 
+
+We made use of github actions on all the pull request to run linting, formatting and unit tests, to make sure that the code was following the standard and was working as expected. After merging the branch and main we deleted the branch to keep the workflow clean.  ---
+
 
 ### Question 10
 
@@ -258,7 +270,7 @@ s201725, s224397, s224411
 >
 > Answer:
 
---- question 10 fill here ---
+--- We did make use of DVC in the following way: We stored our data in google cloud buckets such that we did not need to store our data in github. Instead new users of our project can just dvc pull and github actions does this automatically when running the tests. We did not do that for the dockerfiles as the setup with providing a json key for GCloud seemeed a bit tricky, if we didn't want to risk making that json file avaible online through the docker image. To the extent we did use dvc it made our project more scalable and shareable as large data files would not be a problem to share, even as the data files grows in size. ---
 
 ### Question 11
 
@@ -275,7 +287,8 @@ s201725, s224397, s224411
 >
 > Answer:
 
---- question 11 fill here ---
+--- We have organized our continous integration into 5 seperate files. The first file, tests.yaml, is for the unit tests which runs on the latest versions of ubunti, windows and mac-os for both python 3.12 and 3.11. It downloads our data from the cloud and runs our tests through pytest and calculates the coverage. We also have a pre_commit.yaml file which runs the pre-commit check in github actions which we already use to check all of our commits. This extra step ensures that our linting an formatting is uniform. Our third file, staged_model.yaml runs a perfomance test if a new model is part of the pull request and stages that model and its performance to the wandb model registry. The fourth file, cloudbuild.yaml, only runs when new data is part of the pull request. In that case it analyzes the data through dataset_statistics.py and prints the result of that on the PR-page. Lastly, cloudbuild.yaml is used to build and push our docker images to GCP through GithubActions. We also use the standard dependabot.yaml to help with dependencies. We have used caches a lot, using 13 cahces actively, to make github actions run much more efficiently. An example of one of our triggered workflows can be seen here:
+https://github.com/ChrisVN123/02476_mlops_exam/actions/workflows/cml_data.yaml ---
 
 ## Running code and tracking experiments
 
@@ -294,7 +307,7 @@ s201725, s224397, s224411
 >
 > Answer:
 
---- question 12 fill here ---
+--- We used a config.yaml file in the configs folder. It contains the different configurations we need for the different programs we want to run e.g. epochs and the optimizer used for training. This meant that one had to change the parameters in the .config.yaml file corresponding to a specific program before running the program. ---
 
 ### Question 13
 
@@ -309,7 +322,7 @@ s201725, s224397, s224411
 >
 > Answer:
 
---- question 13 fill here ---
+--- As mentioned we made use of config files. With the help of hydra after each run our configuration was saved in the outputs folder in a new folder based on the time and date of the run. Here one .hydra folder was created containing our hydra and config.yaml configuration. Furthermore, a wandb folder is created, which contains our requirements file used on that run, any models created, as well as a .dvc file to track the new pickeld version of our model and a data.dvc file such that we know what data file was used (this data file is then pushed to GCloud bucket). A clear improvement would be to not also store the model locally each time we run, but as the models are very small this is not that important. By logging everything that is written to the terminal we add another step to ensure that no information is lost. If we had to reproduce the experiment we would just use the saved model, the config file and use the data.dvc to find the data used in the GCloud bucket. As we also save the seed used we can acheivie exactly the same test-train split.  ---
 
 ### Question 14
 

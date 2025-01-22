@@ -29,5 +29,7 @@ omit = ["tests/*"]
 [project.scripts]
 train = "my_project.train:main"
 
-[tool.isort]
-profile = "black"
+[tool.mypy]
+files = ["src/"]
+python_version = 3.11  
+namespace_packages = false

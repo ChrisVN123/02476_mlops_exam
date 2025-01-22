@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
 
-from src.exam_project.predict import app
+from src.exam_project.api import app
 
 client = TestClient(app)
 
