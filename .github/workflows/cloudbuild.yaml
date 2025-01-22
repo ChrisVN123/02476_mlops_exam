@@ -51,9 +51,9 @@ jobs:
       # Build the Docker image
       - name: Build Docker image
         run: |
-          docker build -t europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-container/cloudbuild:latest -f dockerfiles/cloudtrain.dockerfile .
+          docker build -t europe-west1-docker.pkg.dev/exammlops/my-container/cloudbuild:latest -f dockerfiles/cloudtrain.dockerfile .
 
       # Push the Docker image to the container registry
       - name: Push Docker image to GCP
         run: |
-          docker push europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-container/cloudbuild:latest
+          docker push europe-west1-docker.pkg.dev/exammlops/my-container/cloudbuild:latest
