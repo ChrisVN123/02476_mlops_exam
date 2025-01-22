@@ -49,11 +49,21 @@ jobs:
         run: gsutil cp -r gs://exam_mlops_data_bucket/dvc/data/* ./data/
 
       # Build the Docker image
-      - name: Build Docker image
-        run: |
-          docker build -t europe-west1-docker.pkg.dev/exammlops/my-container/cloudbuild:latest -f dockerfiles/cloudtrain.dockerfile .
+      - name: 'gcr.io/cloud-builders/docker'
+        id: 'Build container image'
+        args: [
+          'build',
+          '.',
+          '-t',
+          'europe-west1-docker.pkg.dev/exammlops/my-container/cloudbuild:latest',
+          '-f',
+          'dockerfiles/cloudtrain.dockerfile'
+        ]
 
       # Push the Docker image to the container registry
-      - name: Push Docker image to GCP
-        run: |
-          docker push europe-west1-docker.pkg.dev/exammlops/my-container/cloudbuild:latest
+      - name: 'gcr.io/cloud-builders/docker'
+        id: 'Push container image'
+        args: [
+          'push',
+          'europe-west1-docker.pkg.dev/exammlops/my-container/cloudbuild:latest'
+        ]
