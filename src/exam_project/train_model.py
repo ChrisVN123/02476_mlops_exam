@@ -20,6 +20,7 @@ logger.add("results/app.log", level="DEBUG", rotation="10 MB")
 def main(cfg: DictConfig):
     try:
         # Initialize W&B
+        wandb.login(key=cfg.training.wandb_api_key)
         run = wandb.init(
             entity="dtumlops_24",
             project="sector-classification",

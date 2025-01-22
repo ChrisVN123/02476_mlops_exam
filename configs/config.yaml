@@ -4,7 +4,9 @@ training:
   epochs: 500
   optimizer: adam
   loss_function: cross_entropy
+  wandb_api_key : '38cdb79190214b4b26e0a94db6a9f78fa7e3168c'
   training_image: ${hydra:runtime.cwd}/results
+
 
 model:
   architecture: resnet50

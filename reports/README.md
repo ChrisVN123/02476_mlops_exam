@@ -78,18 +78,17 @@ will check the repositories and the code to verify your answers.
 * [X] Get some continuous integration running on the GitHub repository (M17) <!--- Harris -->
 * [X] Add caching and multi-os/python/pytorch testing to your continuous integration (M17) <!--- Harris we only need implement pytorch version test but lets do it in the end -->
 * [X] Add a linting step to your continuous integration (M17) <!--- Harris -->
-* [ ] Add pre-commit hooks to your version control setup (M18) <!--- Harris -->
 * [X] Add pre-commit hooks to your version control setup (M18) <!--- Harris -->
 * [X] Add a continues workflow that triggers when data changes (M19) <!--- Fabian -->
-* [ ] Add a continues workflow that triggers when changes to the model registry is made (M19) <!--- Fabian -->
+* [X] Add a continues workflow that triggers when changes to the model registry is made (M19) <!--- Fabian -->
 * [X] Create a data storage in GCP Bucket for your data and link this with your data version control setup (M21) <!--- Christian -->
 * [ ] Create a trigger workflow for automatically building your docker images (M21) <!--- Christian -->
 * [ ] Get your model training in GCP using either the Engine or Vertex AI (M21) <!--- Christian -->
 * [X] Create a FastAPI application that can do inference using your model (M22)  <!--- Harris -->
 * [X] Deploy your model in GCP using either Functions or Run as the backend (M23)  <!--- Harris -->
-* [ ] Write API tests for your application and setup continues integration for these (M24)
+* [X] Write API tests for your application and setup continues integration for these (M24)
 * [ ] Load test your application (M24)
-* [ ] Create a more specialized ML-deployment API using either ONNX or BentoML, or both (M25)
+* [X] Create a more specialized ML-deployment API using either ONNX or BentoML, or both (M25)
 * [ ] Create a frontend for your API (M26)
 
 ### Week 3
@@ -107,10 +106,10 @@ will check the repositories and the code to verify your answers.
 
 * [ ] Write some documentation for your application (M32)
 * [ ] Publish the documentation to GitHub Pages (M32)
-* [ ] Revisit your initial project description. Did the project turn out as you wanted?
+* [X] Revisit your initial project description. Did the project turn out as you wanted?
 * [ ] Create an architectural diagram over your MLOps pipeline
-* [ ] Make sure all group members have an understanding about all parts of the project
-* [ ] Uploaded all your code to GitHub
+* [X] Make sure all group members have an understanding about all parts of the project
+* [X] Uploaded all your code to GitHub
 
 ## Group information
 
@@ -546,7 +545,12 @@ s201725, s224397, s224411
 >
 > Answer:
 
---- question 29 fill here ---
+The diagram below illustrates the overall architecture of our system, encompassing both the developer and user perspectives.
+
+From the developer side, the project is hosted on GitHub, where new code and features are pushed to the repository. Upon each push, automated workflows are triggered via GitHub Actions to run tests and ensure code quality before merging changes into the main branch. Model training is also a core aspect of the workflow, where we log metrics and parameters using Weights & Biases (Wandb). Wandb facilitates model versioning and artifact storage within our model registry. Similarly, the data used for training is version-controlled using DVC (Data Version Control), with key statistics automatically monitored and summarized in pull request comments through GitHub Actions.
+
+From the user side, the GitHub repository provides access to the project code and documentation. The Google Cloud Platform (GCP) plays a crucial role in hosting our latest trained model, storing associated data, and providing a Docker image for seamless deployment and use. This enables users to fetch the latest model, its dependencies, and datasets to integrate or utilize in their workflows.
+![ProjectStructure](figures/ProjectStructure.png)
 
 ### Question 30
 
@@ -560,8 +564,10 @@ s201725, s224397, s224411
 >
 > Answer:
 
---- question 30 fill here ---
+One of the biggest challenges, which we saw already in the exercises, was the amount of time it takes in general to train the model, build docker images, etc. We therefore chose a smaller dataset and model to focus more intensely on the setup around the model, such as cloud, logging, workflow, tests, etc.
+Furthermore, we used a collaboration setup where we initially made 3 branches. The idea was to use one branch each between the group members. This did create quite a few challenges as it was hard to make sure all branches was up to date before merging them. To solve this we changed method by making a new branch every time we were to make a new feature, then made a pull request for testing before we merged. Additionally we created rules that the code to comply with before commiting to make sure PEP8 standards were met, securing that we remember to pull before pushing and that one could not push directly to main branch but had to branch and make a pull request first for testing.
 
+We also hit a few challanges with Google Cloud Platform (GCP) but most of them was related to setup and was solved during the exercises. Meaning that most of the tasks regarding the cloud on the project ran a bit smoother. It was only the authentication part that took most time during the cloud setup for the project.
 ### Question 31
 
 > **State the individual contributions of each team member. This is required information from DTU, because we need to**
