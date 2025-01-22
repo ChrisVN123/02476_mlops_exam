@@ -4,6 +4,7 @@ dvc-gdrive
 dvc_gs
 fastapi==0.115.6
 fastapi
+httpx
 hydra-core
 kagglehub==0.3.6
 loguru
