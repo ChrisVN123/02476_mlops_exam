@@ -460,7 +460,7 @@ https://github.com/ChrisVN123/02476_mlops_exam/actions/workflows/cml_data.yaml -
 >
 > Answer:
 
---- question 23 fill here ---
+--- Yes we did manage to create an API in src/exam_project/api.py. We created a landing page where it is simply explained that the API allows you to go to /predict/{initials} and you can then type in the initials of any company in our test database and it returns the predicted sector and the correct sector. If the initials do not match, we print all available initials for the user. As the inputs to the model are quite detailed and lengthy we found this to be the easiest solution. Another option could have been to let the user input all the necessary inputs like number of full-time employees of a specific firm through a frontend, and then run the model. We used ONNX to make the API lightweight and quick.---
 
 ### Question 24
 
@@ -476,7 +476,13 @@ https://github.com/ChrisVN123/02476_mlops_exam/actions/workflows/cml_data.yaml -
 >
 > Answer:
 
---- question 24 fill here ---
+--- We did manage to deploy the model both locally and in the cloud. The method used in both cases was to build the dockerfile api.dockerfile where we copied all the necessary files and defined the entrypoint to be:
+ENTRYPOINT ["uvicorn", "src.exam_project.api:app", "--host", "0.0.0.0", "--port", "8000"]. Locally we used the command: 
+docker run -p 8000:8000 api:latest. 
+This allowed us to make the predictions through localhost:8000/predict/AAPL
+In the cloud we first uploaded the docker image to the artifact registry and afterwards we used cloud run to deploy our api in the cloud. The predictions can be accessed by writing e.g.:
+https://api-983839719560.europe-west1.run.app/predict/AAPL
+---
 
 ### Question 25
 
@@ -488,10 +494,12 @@ https://github.com/ChrisVN123/02476_mlops_exam/actions/workflows/cml_data.yaml -
 > Example:
 > *For unit testing we used ... and for load testing we used ... . The results of the load testing showed that ...*
 > *before the service crashed.*
->
+>l
 > Answer:
 
---- question 25 fill here ---
+--- We did not implement unit testing or load testing per se. However, we did make some api tests in tests/test_api.py which tested if our API behaved as expected for different paths, e.g when invalid company initials are provided. Load testing could have been implemented by using the locust package. Then we would have defined a user class in the file tests/perfomancetests/locustfile.py where we defined how this user would interact with our api and what pages it would visit. Then we could run the command 
+locust -f tests/performancetests/locustfile.py
+ ---
 
 ### Question 26
 
@@ -506,7 +514,7 @@ https://github.com/ChrisVN123/02476_mlops_exam/actions/workflows/cml_data.yaml -
 >
 > Answer:
 
---- question 26 fill here ---
+--- We did not manage to implement monitoring. We would like to have monitoring implemented such that over time we could measure data drifting and target drifting to track if certain properties of our input data changes over time and if the distribution of the models sector predictions changes over time. This could help us understand if the perfomance of our model started to worsen - if for example the data we have started received is significantly different from our training data this could mean that we should consider retraining the model.   ---
 
 ## Overall discussion of project
 
@@ -525,7 +533,7 @@ https://github.com/ChrisVN123/02476_mlops_exam/actions/workflows/cml_data.yaml -
 >
 > Answer:
 
---- question 27 fill here ---
+--- Group member 1 used 14 kr, Group member 2... which was mostly spend on the compute engine which was mainly used for persistent disk storage. In general working in the cloud obviously offers huge benefits when having to scale, but it does take some time to get used to working in the cloud. However, it wasn't as difficult as it could have been expected. The most challenging part was getting the docker file up and running for the API and setting up dvc push and pull in a way that allowed for easy tracking of the data and model used ---
 
 ### Question 28
 
@@ -558,12 +566,12 @@ https://github.com/ChrisVN123/02476_mlops_exam/actions/workflows/cml_data.yaml -
 >
 > Answer:
 
-The diagram below illustrates the overall architecture of our system, encompassing both the developer and user perspectives.
+--- The diagram below illustrates the overall architecture of our system, encompassing both the developer and user perspectives.
 
 From the developer side, the project is hosted on GitHub, where new code and features are pushed to the repository. Upon each push, automated workflows are triggered via GitHub Actions to run tests and ensure code quality before merging changes into the main branch. Model training is also a core aspect of the workflow, where we log metrics and parameters using Weights & Biases (Wandb). Wandb facilitates model versioning and artifact storage within our model registry. Similarly, the data used for training is version-controlled using DVC (Data Version Control), with key statistics automatically monitored and summarized in pull request comments through GitHub Actions.
 
 From the user side, the GitHub repository provides access to the project code and documentation. The Google Cloud Platform (GCP) plays a crucial role in hosting our latest trained model, storing associated data, and providing a Docker image for seamless deployment and use. This enables users to fetch the latest model, its dependencies, and datasets to integrate or utilize in their workflows.
-![ProjectStructure](figures/ProjectStructure.png)
+![ProjectStructure](figures/ProjectStructure.png) ---
 
 ### Question 30
 
@@ -596,4 +604,8 @@ We also hit a few challanges with Google Cloud Platform (GCP) but most of them w
 >
 > Answer:
 
---- question 31 fill here ---
+--- Student s224397 was in charge of continous integration, pre-commit hooks, linting, building the API and developing the API dockercontainer , saving it in the artifact registry and deploying it through cloud run.
+Student 
+
+All members contributed to answering questions and bug fixing. 
+---
