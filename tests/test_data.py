@@ -1,6 +1,5 @@
 import numpy as np
 from sklearn.compose import ColumnTransformer
-
 from exam_project.data import load_and_preprocess_data
 from tests.__init__ import _PATH_DATA  # Adjust this import to your actual utils module
 
