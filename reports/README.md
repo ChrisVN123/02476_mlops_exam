@@ -142,7 +142,7 @@ s201725, s224397, s224411
 > *package to do ... and ... in our project*.
 >
 > Answer:
-
+### DENNE HER ER NOK IKKE Så god - ruff er jo langt hurtigere - vi brugte bare black da vi ikke kunne få andet til at virke
 --- We used the third-party framework black installed by pip, which is a python formatter supporting the PEP8 formatter. Black differs from other formatting frameworks like ruff by not simultaneously being a linter, which means black does not check for errors in the code. For this we used ruff and flake8. The reason for including black is its wider application for formatting compared to ruff. Both of them are optimized regarding speed even though ruff might be a bit faster due to it being programmed in Rust, while black is made in python.   ---
 
 ## Coding environment
