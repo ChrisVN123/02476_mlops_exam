@@ -14,7 +14,6 @@ COPY models/ models/
 COPY data/ data/
 
 
-RUN pip install -r requirements_api.txt --no-cache-dir
-
+RUN pip install --default-timeout=300 -r requirements_api.txt --no-cache-dir
 
 ENTRYPOINT ["uvicorn", "src.exam_project.predict:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -16,6 +16,13 @@ outs:
       cloud:
         etag: 08d0bda8fb88ff8a031001
         version_id: '1737196418244304'
+  - relpath: processed/sector_names.csv
+    md5: 73b5423471e9728d5b4e424958d3ed84
+    size: 165
+    cloud:
+      cloud:
+        etag: 08a4d1fed0ef888b031001
+        version_id: '1737533215975588'
   - relpath: processed/y_test.csv
     md5: 4732de92b8167e7ab2ee47ceac1929c7
     size: 4573
