@@ -1,6 +1,12 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.9.2
+    hooks:
+    - id: ruff
+      exclude: \.csv$
+
   - repo: https://github.com/psf/black
     rev: 24.8.0  # Use the latest version of black
     hooks:
@@ -22,7 +28,6 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.2.0
     hooks:
-    -   id: trailing-whitespace
     -   id: end-of-file-fixer
     -   id: check-yaml
     -   id: check-added-large-files
@@ -31,4 +36,3 @@ repos:
     -   id: check-merge-conflict
     -   id: requirements-txt-fixer
     -   id: end-of-file-fixer
-    stages: [commit]
