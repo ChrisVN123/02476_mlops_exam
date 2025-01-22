@@ -4,12 +4,13 @@ import hydra
 import pandas as pd
 import torch
 import wandb  # Import Weights & Biases
+from loguru import logger
+from omegaconf import DictConfig
+
 from .api import predict_sector, preprocess_new_company
 from .data import load_and_preprocess_data
 from .evaluate import evaluate_model
-from loguru import logger
 from .model import SectorClassifier
-from omegaconf import DictConfig
 from .train import create_dataloader, train_model, visualize_training
 
 # Configure the logger
