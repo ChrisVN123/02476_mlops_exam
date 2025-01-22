@@ -494,7 +494,7 @@ https://api-983839719560.europe-west1.run.app/predict/AAPL
 > Example:
 > *For unit testing we used ... and for load testing we used ... . The results of the load testing showed that ...*
 > *before the service crashed.*
->l
+>
 > Answer:
 
 --- We did not implement unit testing or load testing per se. However, we did make some api tests in tests/test_api.py which tested if our API behaved as expected for different paths, e.g when invalid company initials are provided. Load testing could have been implemented by using the locust package. Then we would have defined a user class in the file tests/perfomancetests/locustfile.py where we defined how this user would interact with our api and what pages it would visit. Then we could run the command 
