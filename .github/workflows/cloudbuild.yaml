@@ -47,8 +47,10 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t europe-west1-docker.pkg.dev/exammlops/my-container/cloudbuild:latest -f dockerfiles/cloudtrain.dockerfile .
+          docker build -t europe-west1-docker.pkg.dev/exammlops/my-container/cloudbuild:latest -f dockerfiles/api.dockerfile .
 
       # Push the Docker image to the container registry
       - name: Push Docker image
         run: |
           docker push europe-west1-docker.pkg.dev/exammlops/my-container/cloudbuild:latest
+          docker push europe-west1-docker.pkg.dev/exammlops/my-container/api:latest
