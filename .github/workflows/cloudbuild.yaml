@@ -36,6 +36,18 @@ jobs:
         run: |
           gcloud auth configure-docker europe-west1-docker.pkg.dev
 
+      - name: Get directory content (ls)
+        run: ls
+      - name: Ensure data directory exists
+        run: mkdir -p ./data
+      - name: Change to data directory
+        run: cd data
+      - name: Get directory content (ls)
+        run: ls
+
+      - name: Download test data from Google Cloud Storage
+        run: gsutil cp -r gs://exam_mlops_data_bucket/dvc/data/* ./data/
+
       # Build the Docker image
       - name: Build Docker image
         run: |
