@@ -20,6 +20,7 @@ logger.add("results/app.log", level="DEBUG", rotation="10 MB")
 def main(cfg: DictConfig):
     try:
         # Initialize W&B
+        wandb.login(key=cfg.training.wandb_api_key)
         run = wandb.init(
             entity="dtumlops_24",
             project="sector-classification",
@@ -41,9 +42,16 @@ def main(cfg: DictConfig):
         # Load and preprocess the dataset
         file_path = cfg.data.raw_path
         logger.info("Loading and preprocessing data...")
-        column_transformer, X_train, X_val, X_test, y_train, y_val, y_test = (
-            load_and_preprocess_data(file_path)
-        )
+        (
+            column_transformer,
+            X_train,
+            X_val,
+            X_test,
+            y_train,
+            y_val,
+            y_test,
+            sector_name,
+        ) = load_and_preprocess_data(file_path)
         logger.success("Data loaded and preprocessed successfully.")
 
         # Create DataLoaders
