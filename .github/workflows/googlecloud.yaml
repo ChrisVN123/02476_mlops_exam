@@ -7,7 +7,7 @@ steps:
       '-t',
       'europe-west1-docker.pkg.dev/exammlops/my-container/cloudbuild:latest',
       '-f',
-      'dockerfiles/googlecloud.dockerfile .'
+      'dockerfiles/cloudtrain.dockerfile .'
     ]
   - name: 'gcr.io/cloud-builders/docker'
     id: 'Push container image'
