@@ -521,7 +521,7 @@ locust -f tests/performancetests/locustfile.py
 >
 > Answer:
 
---- We did not manage to implement monitoring. We would like to have monitoring implemented such that over time we could measure data drifting and target drifting to track if certain properties of our input data changes over time and if the distribution of the models sector predictions changes over time. This could help us understand if the perfomance of our model started to worsen - if for example the data we have started received is significantly different from our training data this could mean that we should consider retraining the model.   ---
+--- We managed to implement some monitoring in form of local data drifting, which is saved to the report.html file. We did not manage to implement it for API testing in the cloud. We made a train_test_split to obtain both a reference and a current dataset, so Evidently could create the report comparing these two datasets. We measured a drift of 56%, which probably is quite high. This could lead to our model worsening quicker, hence retraining the model more often would be required. We did not manage to implement any system monitoring. They could have been usefull to gather more information about our system, fx. tracking the number of requests, since that is related to the cost of our application.  ---
 
 ## Overall discussion of project
 
@@ -613,6 +613,7 @@ We also hit a few challanges with Google Cloud Platform (GCP) but most of them w
 
 --- Student s224397 was in charge of continous integration, pre-commit hooks, linting, building the API and developing the API dockercontainer , saving it in the artifact registry and deploying it through cloud run.
 Student s201725 was in charge of project set-up on GitHub and codestructure setup with cookiecutter. The student was in charge of securing the codestructure was continouesly kept. Further the student was in charge of cloud set-up including continoues integration workflows with the cloud. The student also spent on logging and integration with WandB.
+Student s224411 was in charge of datadrifting and apitesting the code and the continoues workflow regarding data changes. 
 
 All members contributed to answering questions and bug fixing. 
 ---
