@@ -368,7 +368,7 @@ https://github.com/ChrisVN123/02476_mlops_exam/actions/workflows/cml_data.yaml -
 >
 > Answer:
 
---- question 16 fill here ---
+--- One of the debugging methods used was simple print statements to verify variables looked as expected. We have also used pythons inbuilt debugger to get an idea of how the script runs as it is being executed. The method used depended a lot on the group member and the size of the problem at hand. We did use profiling once for optimizing the code ... . Profiling contributes to find possible bottlenecks in your code by finding the parts of the code with the largest runtime. By this you know which part of your code to optimize. ---
 
 ## Working in the cloud
 
