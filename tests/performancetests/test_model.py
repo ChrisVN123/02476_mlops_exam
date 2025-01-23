@@ -21,7 +21,7 @@ def load_model():
     )
 
     # Fetch and download the artifact
-    artifact = api.artifact("dtu_mlops_24/wandb-registry-ExamMLOps/test_collection:v3")
+    artifact = api.artifact("test_collection:v3")
     artifact.download(root=logdir)
 
     # Load the model checkpoint
