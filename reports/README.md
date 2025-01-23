@@ -236,8 +236,7 @@ We stuck to the template quite consistly and filled out all the folders from the
 >
 > Answer:
 
---- The total code coverage of code is 87%, which only includes the files data.py, api.py, model.py, which means that the files evaluate.py, train_model.py and train.py is not tested which is a clear weakness of our test setup. Even if the code coverage had been 100% we are of course still not sure that the code will be error free, since this still depends on the tests actulaly covering all the different possible sources of errors. We might have tests which only tests for very specific errors such as the fact that our NN returns the correct model shape, but this does not ensure that the model cannot run into other errors. 
----
+--- The total code coverage of code is 87%, which only includes the files data.py, api.py, model.py, which means that the files evaluate.py, train_model.py and train.py is not tested which is a clear weakness of our test setup. Even if the code coverage had been 100% we are of course still not sure that the code will be error free, since this still depends on the tests actulaly covering all the different possible sources of errors. We might have tests which only tests for very specific errors such as the fact that our NN returns the correct model shape, but this does not ensure that the model cannot run into other errors. ---
 
 ### Question 9
 
@@ -386,7 +385,11 @@ https://github.com/ChrisVN123/02476_mlops_exam/actions/workflows/cml_data.yaml -
 >
 > Answer:
 
---- question 17 fill here ---
+--- We used Google Cloud Storage, Compute Engine, and Vertex AI in our project. Cloud Storage Buckets were mostly used to store data and Docker images for our workflows. While the buckets served as the storage location for training data, they also played a role in validating and monitoring data changes. Our workflows leveraged these buckets to detect changes, and automated pull request comments were generated to inform users of any updates or differences in the data.
+
+For training, we relied on Vertex AI and Compute Engine. Vertex AI was the primary platform for managing machine learning training tasks, while Compute Engine provided flexible VM resources for additional computational needs. These services were integrated into our continuous integration workflows.
+
+To support continuous integration, workflows were triggered automatically upon detecting changes in data or configurations. These workflows streamlined training, data validation, and container management, helping to maintain a consistent and efficient pipeline for both development and production tasks.---
 
 ### Question 18
 
@@ -401,7 +404,7 @@ https://github.com/ChrisVN123/02476_mlops_exam/actions/workflows/cml_data.yaml -
 >
 > Answer:
 
---- question 18 fill here ---
+--- The size of our dataset was by choice quite small, minimizing the importance of using VM's, but we did integrate it into our project as a show of understading. We used Compute Engine for cloud-based model training by configuring virtual machines to run our training scripts directly or in conjunction with Vertex AI. This allowed us to leverage scalable cloud resources to handle datasets and complex models more efficiently. Compute Engine also played a key role in integrating with our CI/CD workflows. Automated tasks such as data validation, logging artifacts to Weights & Biases (W&B), and building Docker images were executed seamlessly using Compute Engine. Though in our final workflow the docker images are build using GitHub VM's and then pushed to an artifact registry in GCP ---
 
 ### Question 19
 
@@ -410,7 +413,9 @@ https://github.com/ChrisVN123/02476_mlops_exam/actions/workflows/cml_data.yaml -
 >
 > Answer:
 
---- question 19 fill here ---
+--- Find below a screenshort of the GCP bucket where we stored out data. Note that the main dataset is in the dvc/data/ folder. ---
+
+![GCP](figures/GCP_bucket.png)
 
 ### Question 20
 
@@ -419,7 +424,9 @@ https://github.com/ChrisVN123/02476_mlops_exam/actions/workflows/cml_data.yaml -
 >
 > Answer:
 
---- question 20 fill here ---
+--- Find below a screenshort of the Artifcat Registry where we saved our builded docker images. This is also where our CI saved the images connected to the trigger workflow ---
+
+![docker](figures/docker.png)
 
 ### Question 21
 
@@ -549,7 +556,7 @@ locust -f tests/performancetests/locustfile.py
 >
 > Answer:
 
---- question 28 fill here ---
+--- We didn't implement anything not covored by the questions but focused on the curricullum. ---
 
 ### Question 29
 
@@ -585,10 +592,10 @@ From the user side, the GitHub repository provides access to the project code an
 >
 > Answer:
 
-One of the biggest challenges, which we saw already in the exercises, was the amount of time it takes in general to train the model, build docker images, etc. We therefore chose a smaller dataset and model to focus more intensely on the setup around the model, such as cloud, logging, workflow, tests, etc.
+--- One of the biggest challenges, which we saw already in the exercises, was the amount of time it takes in general to train the model, build docker images, etc. We therefore chose a smaller dataset and model to focus more intensely on the setup around the model, such as cloud, logging, workflow, tests, etc.
 Furthermore, we used a collaboration setup where we initially made 3 branches. The idea was to use one branch each between the group members. This did create quite a few challenges as it was hard to make sure all branches was up to date before merging them. To solve this we changed method by making a new branch every time we were to make a new feature, then made a pull request for testing before we merged. Additionally we created rules that the code to comply with before commiting to make sure PEP8 standards were met, securing that we remember to pull before pushing and that one could not push directly to main branch but had to branch and make a pull request first for testing.
 
-We also hit a few challanges with Google Cloud Platform (GCP) but most of them was related to setup and was solved during the exercises. Meaning that most of the tasks regarding the cloud on the project ran a bit smoother. It was only the authentication part that took most time during the cloud setup for the project.
+We also hit a few challanges with Google Cloud Platform (GCP) but most of them was related to setup and was solved during the exercises. Meaning that most of the tasks regarding the cloud on the project ran a bit smoother. It was only the authentication part that took most time during the cloud setup for the project. ---
 ### Question 31
 
 > **State the individual contributions of each team member. This is required information from DTU, because we need to**
@@ -605,7 +612,7 @@ We also hit a few challanges with Google Cloud Platform (GCP) but most of them w
 > Answer:
 
 --- Student s224397 was in charge of continous integration, pre-commit hooks, linting, building the API and developing the API dockercontainer , saving it in the artifact registry and deploying it through cloud run.
-Student 
+Student s201725 was in charge of project set-up on GitHub and codestructure setup with cookiecutter. The student was in charge of securing the codestructure was continouesly kept. Further the student was in charge of cloud set-up including continoues integration workflows with the cloud. The student also spent on logging and integration with WandB.
 
 All members contributed to answering questions and bug fixing. 
 ---
