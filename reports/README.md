@@ -368,7 +368,7 @@ https://github.com/ChrisVN123/02476_mlops_exam/actions/workflows/cml_data.yaml -
 >
 > Answer:
 
---- One of the debugging methods used was simple print statements to verify variables looked as expected. We have also used pythons inbuilt debugger to get an idea of how the script runs as it is being executed. The method used depended a lot on the group member and the size of the problem at hand. We did use profiling once for optimizing the code ... . Profiling contributes to find possible bottlenecks in your code by finding the parts of the code with the largest runtime. By this you know which part of your code to optimize. ---
+--- One of the debugging methods used was simple print statements to verify variables looked as expected. We have also used pythons inbuilt debugger to get an idea of how the script runs as it is being executed. The method used depended a lot on the group member and the size of the problem at hand. We did use profiling once for optimizing the code. We ran the profiling and assesed which parts of our code could be optimized, which we tried doing. Later profiling showed a small change. Profiling contributes to find possible bottlenecks in your code by finding the parts of the code with the largest runtime. By this you know which part of your code to optimize. We believe that profiling can especially contribute to better understanding of the code, when one works with larger and more complex models than ours. ---
 
 ## Working in the cloud
 
@@ -488,8 +488,7 @@ ENTRYPOINT ["uvicorn", "src.exam_project.api:app", "--host", "0.0.0.0", "--port"
 docker run -p 8000:8000 api:latest. 
 This allowed us to make the predictions through localhost:8000/predict/AAPL
 In the cloud we first uploaded the docker image to the artifact registry and afterwards we used cloud run to deploy our api in the cloud. The predictions can be accessed by writing e.g.:
-https://api-983839719560.europe-west1.run.app/predict/AAPL
----
+https://api-983839719560.europe-west1.run.app/predict/AAPL ---
 
 ### Question 25
 
@@ -505,8 +504,7 @@ https://api-983839719560.europe-west1.run.app/predict/AAPL
 > Answer:
 
 --- We did not implement unit testing or load testing per se. However, we did make some api tests in tests/test_api.py which tested if our API behaved as expected for different paths, e.g when invalid company initials are provided. Load testing could have been implemented by using the locust package. Then we would have defined a user class in the file tests/perfomancetests/locustfile.py where we defined how this user would interact with our api and what pages it would visit. Then we could run the command 
-locust -f tests/performancetests/locustfile.py
- ---
+locust -f tests/performancetests/locustfile.py ---
 
 ### Question 26
 
