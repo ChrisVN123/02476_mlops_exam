@@ -8,9 +8,6 @@ def load_model():
     """
     Load the model from a W&B artifact.
     """
-    model_checkpoint = os.getenv("MODEL_NAME")
-    if not model_checkpoint:
-        raise ValueError("MODEL_NAME environment variable is not set.")
 
     logdir = "./artifacts"  # Define the directory for downloading artifacts
 
@@ -24,7 +21,7 @@ def load_model():
     )
 
     # Fetch and download the artifact
-    artifact = api.artifact(model_checkpoint)
+    artifact = api.artifact("dtu_mlops_24/wandb-registry-ExamMLOps/test_collection:v3")
     artifact.download(root=logdir)
 
     # Load the model checkpoint
