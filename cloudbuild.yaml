@@ -1,19 +1,19 @@
 steps:
-  - name: 'gcr.io/cloud-builders/docker'
-    id: 'Build container image'
-    args: [
-      'build',
-      '.',
-      '-t',
-      'europe-west1-docker.pkg.dev/exammlops/my-container/cloudbuild_main:latest',
-      '-f',
-      'dockerfiles/cloudtrain.dockerfile'
-    ]
-  - name: 'gcr.io/cloud-builders/docker'
-    id: 'Push container image'
-    args: [
-      'push',
-      'europe-west1-docker.pkg.dev/exammlops/my-container/cloudbuild_main:latest'
-    ]
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'Build container image'
+  args: [
+    'build',
+    '.',
+    '-t',
+    'europe-west1-docker.pkg.dev/exammlops/my-container/cloud',
+    '-f',
+    '<path-to-dockerfile>'
+  ]
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'Push container image'
+  args: [
+    'push',
+    'europe-west1-docker.pkg.dev/exammlops/my-container/cloud'
+  ]
 options:
   logging: CLOUD_LOGGING_ONLY
