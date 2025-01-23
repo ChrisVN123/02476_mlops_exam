@@ -1,35 +1,4 @@
 steps:
-
-  - name: Checkout code
-    uses: actions/checkout@v4
-
-  - name: Authenticate with Google Cloud
-    uses: google-github-actions/auth@v1
-    with:
-      credentials_json: ${{ secrets.GCP_SA_KEY }}
-
-  - name: Set up gcloud
-    uses: google-github-actions/setup-gcloud@v2
-    with:
-      project_id: ${{ secrets.GCP_PROJECT_ID }}
-      export_default_credentials: true
-
-  - name: Configure Docker for Google Cloud
-    run: |
-      gcloud auth configure-docker europe-west1-docker.pkg.dev
-
-  - name: Get directory content (ls)
-    run: ls
-  - name: Ensure data directory exists
-    run: mkdir -p ./data
-  - name: Change to data directory
-    run: cd data
-  - name: Get directory content (ls)
-    run: ls
-
-  - name: Download test data from Google Cloud Storage
-    run: gsutil cp -r gs://exam_mlops_data_bucket/dvc/data/* ./data/
-    
   - name: 'gcr.io/cloud-builders/docker'
     id: 'Build container image'
     args: [
@@ -38,7 +7,7 @@ steps:
       '-t',
       'europe-west1-docker.pkg.dev/exammlops/my-container/cloudbuild_main:latest',
       '-f',
-      'dockerfiles/cloudtrain.dockerfile .'
+      'dockerfiles/cloudtrain.dockerfile'
     ]
   - name: 'gcr.io/cloud-builders/docker'
     id: 'Push container image'
