@@ -1,4 +1,3 @@
-import os
 import time
 import torch
 import wandb
@@ -11,17 +10,25 @@ def load_model():
 
     logdir = "./artifacts"  # Define the directory for downloading artifacts
 
-    # Initialize W&B API
-    api = wandb.Api(
-        api_key=os.getenv("WANDB_API_KEY"),
-        overrides={
-            "entity": os.getenv("WANDB_ENTITY"),
-            "project": os.getenv("WANDB_PROJECT"),
-        },
-    )
+    # # Initialize W&B API
+    # api = wandb.Api(
+    #     api_key=os.getenv("WANDB_API_KEY"),
+    #     overrides={
+    #         "entity": os.getenv("WANDB_ENTITY"),
+    #         "project": os.getenv("WANDB_PROJECT"),
+    #     },
+    # )
+
+    # REGISTRY = "<registry_name>"
+    # COLLECTION = "<collection_name>"
+    # VERSION = "<version>"
+
+    api = wandb.Api(api_key="38cdb79190214b4b26e0a94db6a9f78fa7e3168c")
+    artifact_name = "dtumlops_24/sector-classification/artifact-name:v2"
+    artifact = api.artifact(name = artifact_name)
 
     # Fetch and download the artifact
-    artifact = api.artifact("v3")
+    #artifact = api.artifact("v3")
     artifact.download(root=logdir)
 
     # Load the model checkpoint
