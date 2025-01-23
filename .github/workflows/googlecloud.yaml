@@ -1,56 +1,19 @@
 steps:
-  # Authenticate with Google Cloud
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        echo $GCP_SA_KEY | gcloud auth activate-service-account --key-file=-
-        gcloud config set project $GCP_PROJECT_ID
-        gcloud auth configure-docker europe-west1-docker.pkg.dev
-
-  # List directory contents
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
-    args: ['ls']
-
-  # Ensure data directory exists and download test data from GCS
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        mkdir -p ./data
-        gsutil cp -r gs://exam_mlops_data_bucket/dvc/data/* ./data/
-
-  # Build and push the first Docker image
-  - name: 'gcr.io/cloud-builders/docker'
-    args:
-      - 'build'
-      - '-t'
-      - 'europe-west1-docker.pkg.dev/exammlops/my-container/cloudbuild:latest'
-      - '-f'
-      - 'dockerfiles/cloudtrain.dockerfile'
-      - '.'
-  - name: 'gcr.io/cloud-builders/docker'
-    args:
-      - 'push'
-      - 'europe-west1-docker.pkg.dev/exammlops/my-container/cloudbuild:latest'
-
-  # Build and push the API Docker image
-  - name: 'gcr.io/cloud-builders/docker'
-    args:
-      - 'build'
-      - '-t'
-      - 'europe-west1-docker.pkg.dev/exammlops/my-container/api:new'
-      - '-f'
-      - 'dockerfiles/api.dockerfile'
-      - '.'
-  - name: 'gcr.io/cloud-builders/docker'
-    args:
-      - 'push'
-      - 'europe-west1-docker.pkg.dev/exammlops/my-container/api:new'
-
-# Specify the images to save to the Container Registry
-images:
-  - 'europe-west1-docker.pkg.dev/exammlops/my-container/cloudbuild:latest'
-  - 'europe-west1-docker.pkg.dev/exammlops/my-container/api:new'
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'Build container image'
+  args: [
+    'build',
+    '.',
+    '-t',
+    'europe-west1-docker.pkg.dev/exammlops/my-container/cloudbuild:latest',
+    '-f',
+    'dockerfiles/cloudtrain.dockerfile .'
+  ]
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'Push container image'
+  args: [
+    'push',
+    'europe-west1-docker.pkg.dev/exammlops/my-container/cloudbuild:latest'
+  ]
+options:
+  logging: CLOUD_LOGGING_ONLY
