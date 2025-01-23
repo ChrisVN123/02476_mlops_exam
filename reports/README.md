@@ -55,8 +55,8 @@ will check the repositories and the code to verify your answers.
 * [X] Fill out the `data.py` file such that it downloads whatever data you need and preprocesses it (if necessary) (M6)
 * [X] Add a model to `model.py` and a training procedure to `train.py` and get that running (M6)
 * [X] Remember to fill out the `requirements.txt` and `requirements_dev.txt` file with whatever dependencies that you
-    are using (M2+M6) <!-- Have not finished this entirely just thinking that we add more as we go -->
-* [X] Remember to comply with good coding practices (`pep8`) while doing the project (M7) <!-- We must go through the code in the end -->
+    are using (M2+M6)
+* [X] Remember to comply with good coding practices (`pep8`) while doing the project (M7)
 * [X] Do a bit of code typing and remember to document essential parts of your code (M7)
 * [X] Setup version control for your data or part of your data (M8)
 * [X] Add command line interfaces and project commands to your code where it makes sense (M9)
@@ -64,7 +64,7 @@ will check the repositories and the code to verify your answers.
 * [X] Build the docker files locally and make sure they work as intended (M10)
 * [X] Write one or multiple configurations files for your experiments (M11)
 * [X] Used Hydra to load the configurations and manage your hyperparameters (M11)
-* [X] Use profiling to optimize your code (M12) <!-- Have not included the it in the code, only used it for optimizin and removed after -->
+* [X] Use profiling to optimize your code (M12)
 * [X] Use logging to log important events in your code (M14)
 * [X] Use Weights & Biases to log training progress and other important metrics/artifacts in your code (M14)
 * [X] Consider running a hyperparameter optimization sweep (M14)
@@ -72,20 +72,20 @@ will check the repositories and the code to verify your answers.
 
 ### Week 2
 
-* [X] Write unit tests related to the data part of your code (M16) <!--- Christian -->
-* [X] Write unit tests related to model construction and or model training (M16) <!--- Christian -->
-* [X] Calculate the code coverage (M16) <!--- Christian -->
-* [X] Get some continuous integration running on the GitHub repository (M17) <!--- Harris -->
-* [X] Add caching and multi-os/python/pytorch testing to your continuous integration (M17) <!--- Harris we only need implement pytorch version test but lets do it in the end -->
-* [X] Add a linting step to your continuous integration (M17) <!--- Harris -->
-* [X] Add pre-commit hooks to your version control setup (M18) <!--- Harris -->
-* [X] Add a continues workflow that triggers when data changes (M19) <!--- Fabian -->
-* [X] Add a continues workflow that triggers when changes to the model registry is made (M19) <!--- Fabian -->
-* [X] Create a data storage in GCP Bucket for your data and link this with your data version control setup (M21) <!--- Christian -->
-* [X] Create a trigger workflow for automatically building your docker images (M21) <!--- Christian -->
-* [X] Get your model training in GCP using either the Engine or Vertex AI (M21) <!--- Christian -->
-* [X] Create a FastAPI application that can do inference using your model (M22)  <!--- Harris -->
-* [X] Deploy your model in GCP using either Functions or Run as the backend (M23)  <!--- Harris -->
+* [X] Write unit tests related to the data part of your code (M16) 
+* [X] Write unit tests related to model construction and or model training (M16) 
+* [X] Calculate the code coverage (M16) 
+* [X] Get some continuous integration running on the GitHub repository (M17) 
+* [X] Add caching and multi-os/python/pytorch testing to your continuous integration (M17)
+* [X] Add a linting step to your continuous integration (M17) 
+* [X] Add pre-commit hooks to your version control setup (M18)
+* [X] Add a continues workflow that triggers when data changes (M19)
+* [X] Add a continues workflow that triggers when changes to the model registry is made (M19) 
+* [X] Create a data storage in GCP Bucket for your data and link this with your data version control setup (M21)
+* [X] Create a trigger workflow for automatically building your docker images (M21) 
+* [X] Get your model training in GCP using either the Engine or Vertex AI (M21) 
+* [X] Create a FastAPI application that can do inference using your model (M22)  
+* [X] Deploy your model in GCP using either Functions or Run as the backend (M23)
 * [X] Write API tests for your application and setup continues integration for these (M24)
 * [ ] Load test your application (M24)
 * [X] Create a more specialized ML-deployment API using either ONNX or BentoML, or both (M25)
@@ -97,7 +97,7 @@ will check the repositories and the code to verify your answers.
 * [ ] Deploy to the cloud a drift detection API (M27)
 * [ ] Instrument your API with a couple of system metrics (M28)
 * [ ] Setup cloud monitoring of your instrumented application (M28)
-* [ ] Create one or more alert systems in GCP to alert you if your app is not behaving correctly (M28)
+* [X] Create one or more alert systems in GCP to alert you if your app is not behaving correctly (M28)
 * [ ] If applicable, optimize the performance of your data loading using distributed data loading (M29)
 * [ ] If applicable, optimize the performance of your training pipeline by using distributed training (M30)
 * [ ] Play around with quantization, compilation and pruning for you trained models to increase inference speed (M31)
@@ -450,7 +450,7 @@ To support continuous integration, workflows were triggered automatically upon d
 >
 > Answer:
 
---- question 22 fill here ---
+--- We did use the cloud for training but mostly just to try and get better at setting it up and get a deeper understanding of how it works and when to use it. Our model and dataset is quite simple and does not require several hours of training before it reaches a somewhat low error rate. If one where to create a larger model say a convolutional neural network for classification of images the cloud engine might be more appropriate to use than training locally. But in general, the use of the Cloud Engine and Vertex AI shouldn't necesarilly be used if the model and dataset is simple enough to be trained locally. ---
 
 ## Deployment
 
