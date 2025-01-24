@@ -110,6 +110,7 @@ mkdocstrings-python==1.12.2
 ml-dtypes==0.5.1
 mpmath==1.3.0
 multidict==6.1.0
+mypy==1.14.1
 mypy-extensions==1.0.0
 networkx==3.4.2
 nodeenv==1.9.1
@@ -124,6 +125,7 @@ orjson==3.10.14
 packaging==24.2
 paginate==0.5.7
 pandas==2.2.3
+pandas-stubs==2.2.3.241126
 pathspec==0.12.1
 pillow==11.1.0
 pip-tools==7.4.1
@@ -195,6 +197,8 @@ torchvision==0.17.2
 tqdm==4.67.1
 transformers==4.47.1
 typer==0.15.1
+types-markdown==3.7.0.20241204
+types-pytz==2024.2.0.20241221
 typing-extensions==4.12.2
 tzdata==2024.2
 uritemplate==4.1.1
