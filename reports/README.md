@@ -445,7 +445,9 @@ To support continuous integration, workflows were triggered automatically upon d
 >
 > Answer:
 
---- question 21 fill here ---
+--- Initially we build our docker images in github actions which was then pushed to Cloud Artifact Registry. Later we wanted to move this build into cloud to move computation time from github. We used a trigger in cloud to get the repository from Github and build a docker image when something was pushed to the repository in Github As seen in the image this was no easy task, the main challange was for google to retrieve the data from a our storage bucket. It took quite a few tries, mostly just making the syntax and steps in the cloudbuild.yaml (find in root of our repository) to work.  ---
+
+![cloud](figures/cloudbuilding.png)
 
 ### Question 22
 
