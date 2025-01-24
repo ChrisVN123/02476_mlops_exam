@@ -142,7 +142,8 @@ will check the repositories and the code to verify your answers.
 > *package to do ... and ... in our project*.
 >
 > Answer:
---- We used the third-party framework mypy which is a static type checker for python code which checks for mismatches between the types annotated and how the variables and functions are being used. This can of course help catch errors but also make the code more readable and understandable, which is how we primarily used it. We only used it in the src/exam_project folder. We were limited by the fact that for some packages there was not any .pyi stub files which contains the necessary type information e.g. sklearn ---
+> 
+--- We used the third-party framework Mypy, a static type checker for Python code. It checks if the type annotations in the code match how variables and functions are actually used. This helps catch errors early and also makes the code easier to read and understand which was the main reason we decided to use it. We only applied Mypy to the src/exam_project folder. One limitation we faced was that some packages like sklearn, didn’t have .pyi stub files. These files are important because they provide the type information Mypy needs to work properly. Despite this, Mypy was a useful tool for improving the overall quality of our code. ---
 
 ## Coding environment
 
@@ -185,6 +186,7 @@ Furthermore, we specified a requirements_api.txt file which our api.dockerfile u
 > *experiments.*
 >
 > Answer:
+
 --- We have used the cookiecutter template 'mlops_template' from https://github.com/SkafteNicki/mlops_template. 
 We stuck to the template quite consistly and filled out all the folders from the template and almost only added extra folders when packages needed them such as the folder .dvc for our data version control setup,ruff_cahce for linting, .pytest_cahce for testing, configs for the configuration of the experiments etc. An exception to that is that we deleted the folder notebooks as we did not use jupyter notebook for this project. Furthermore, we also added a folder called logs in the reports folder to keep the logs from our training runs, and a folder performance_tests in the tests folder to keep the performance tests. ---
 
@@ -202,7 +204,7 @@ We stuck to the template quite consistly and filled out all the folders from the
 >
 > Answer:
 
---- We used ruff for linting and formating. We decidecd to use 120 charachters as the maximum line length. We also used the package mypy for typing checks as described in Q3. When we are working with larger more complex projects, where more people are involved, a standard way of writing your code becomes crucial. The PEP 8 style guide for python is a good example which also what ruff as a default complies with. When we have a standard way of linting, formatting and typing our code, it makes it much easier for anyone who at a later time has to read, understand and debug the code. Furthermore, IDEs can more effectively help with error detection when the code is formatted in a standard way. ---
+--- We used ruff for linting and formating. We decidecd to use 120 characters as the maximum line length. We also used the package mypy for typing checks as described in Q3. When we are working with larger more complex projects, where more people are involved, a standard way of writing your code becomes crucial. The PEP 8 style guide for python is a good example which also what ruff as a default complies with. When we have a standard way of linting, formatting and typing our code, it makes it much easier for anyone who at a later time has to read, understand and debug the code. Furthermore, IDEs can more effectively help with error detection when the code is formatted in a standard way. ---
 
 ## Version control
 
@@ -236,7 +238,7 @@ We stuck to the template quite consistly and filled out all the folders from the
 >
 > Answer:
 
---- The total code coverage of code is 87%, which only includes the files data.py, api.py, model.py, which means that the files evaluate.py, train_model.py and train.py is not tested which is a clear weakness of our test setup. Even if the code coverage had been 100% we are of course still not sure that the code will be error free, since this still depends on the tests actulaly covering all the different possible sources of errors. We might have tests which only tests for very specific errors such as the fact that our NN returns the correct model shape, but this does not ensure that the model cannot run into other errors. ---
+--- The total code coverage of code is 87%, which only includes the files data.py, api.py, model.py, which means that the files evaluate.py, train_model.py and train.py is not tested which is a clear weakness of our test setup. Even if the code coverage had been 100% we are of course still not sure that the code will be error free, since this still depends on the tests actually covering all the different possible sources of errors. We might have tests which only tests for very specific errors such as the fact that our NN returns the correct model shape, but this does not ensure that the model cannot run into other errors. ---
 
 ### Question 9
 
@@ -251,7 +253,7 @@ We stuck to the template quite consistly and filled out all the folders from the
 >
 > Answer:
 
---- We created a branch each time we implemented a new feature and used pull requests to merge with the main branch. Working on different branches provide security to the main branch, such that what ends on the main branch is less likely to contain errors and it is easir to restore a version which is functional should a bug occur. 
+--- We created a branch each time we implemented a new feature and used pull requests to merge with the main branch. Working on different branches provide security to the main branch, such that what ends on the main branch is less likely to contain errors and it is more easy to restore a version which is functional should a bug occur. 
 
 We made use of github actions on all the pull request to run linting, formatting and unit tests, to make sure that the code was following the standard and was working as expected. After merging the branch and main we deleted the branch to keep the workflow clean.  ---
 
@@ -321,7 +323,7 @@ https://github.com/ChrisVN123/02476_mlops_exam/actions/workflows/cml_data.yaml -
 >
 > Answer:
 
---- As mentioned we made use of config files. With the help of hydra after each run our configuration was saved in the outputs folder in a new folder based on the time and date of the run. Here one .hydra folder was created containing our hydra and config.yaml configuration. Furthermore, a wandb folder is created, which contains our requirements file used on that run, any models created, as well as a .dvc file to track the new pickeld version of our model and a data.dvc file such that we know what data file was used (this data file is then pushed to GCloud bucket). A clear improvement would be to not also store the model locally each time we run, but as the models are very small this is not that important. By logging everything that is written to the terminal we add another step to ensure that no information is lost. If we had to reproduce the experiment we would just use the saved model, the config file and use the data.dvc to find the data used in the GCloud bucket. As we also save the seed used we can acheivie exactly the same test-train split.  ---
+--- As mentioned we made use of config files. With the help of hydra after each run our configuration was saved in the outputs folder in a new folder based on the time and date of the run. Here one .hydra folder was created containing our hydra and config.yaml configuration. Furthermore, a wandb folder is created, which contains our requirements file used on that run, any models created, as well as a .dvc file to track the new picked version of our model and a data.dvc file such that we know what data file was used (this data file is then pushed to GCloud bucket). A clear improvement would be to not also store the model locally each time we run, but as the models are very small this is not that important. By logging everything that is written to the terminal we add another step to ensure that no information is lost. If we had to reproduce the experiment we would just use the saved model, the config file and use the data.dvc to find the data used in the GCloud bucket. As we also save the seed used we can acheivie exactly the same test-train split.  ---
 
 ### Question 14
 
@@ -338,7 +340,11 @@ https://github.com/ChrisVN123/02476_mlops_exam/actions/workflows/cml_data.yaml -
 >
 > Answer:
 
---- question 14 fill here ---
+--- We used Weights and Biases (WandB) to track loss and parameter optimization during training to get a better understanding of the model. The loss graph shows shows that our model quite quickly finds a minimum and stays in a tight loss interval jumping up and down. This tells us that training the model for more epochs most likely want improve the prediction accuracy. We acknowledge that the size of our data is somewhat too smallf as we have to split into training and test sets making the subsets of the data for training quite small. Although our model seems to be quite precise, one could definitely find bigger datasets to train on. Furthermore we used the paramater and weight plots from WandB to check if the weights does in fact stabilize in at the apperant convergence area of the loss plot. And that seems to be the case, supporting the hypothesis that more training would not necessarily improve the accuracy of the model. In general, tracking loss, parameters and weights is a great idea to understand what happens in your model during training. If one were to work with even more complex model, WandB would pose as and ever stronger tool than it did in our project. Additionally one could combine it with a profiling of ones code to find weak links in the setup and improve the model and code. ---
+
+![loss](figures/wandb_loss.png)
+![grads](figures/wandb_grads.png)
+![params](figures/wandb_params.png)
 
 ### Question 15
 
@@ -353,7 +359,11 @@ https://github.com/ChrisVN123/02476_mlops_exam/actions/workflows/cml_data.yaml -
 >
 > Answer:
 
---- question 15 fill here ---
+--- In our project, Docker was essential for creating containerized environments to ensure consistency across development, testing, and deployment. We used Docker to package all the necessary dependencies, code, and configurations, making it easy to run the project anywhere without worrying about compatibility issues.
+
+For example, we created a Docker image to handle training our machine learning model. The Dockerfile includes a Python base image, installs required libraries like PyTorch and W&B, and copies our project files from the src/ directory. The image is set up to run our train_model.py script, which handles tasks like preprocessing data, training the model, and logging results to W&B.
+
+We also integrated Docker with Google Cloud services. Using GitHub Actions, we automatically built and pushed Docker images to Google Cloud Artifact Registry, which allowed us to use them for training and deployment. ---
 
 ### Question 16
 
