@@ -67,7 +67,7 @@ will check the repositories and the code to verify your answers.
 * [X] Use profiling to optimize your code (M12)
 * [X] Use logging to log important events in your code (M14)
 * [X] Use Weights & Biases to log training progress and other important metrics/artifacts in your code (M14)
-* [X] Consider running a hyperparameter optimization sweep (M14)
+* [ ] Consider running a hyperparameter optimization sweep (M14)
 * [ ] Use PyTorch-lightning (if applicable) to reduce the amount of boilerplate in your code (M15)
 
 ### Week 2
@@ -83,7 +83,7 @@ will check the repositories and the code to verify your answers.
 * [X] Add a continues workflow that triggers when changes to the model registry is made (M19) 
 * [X] Create a data storage in GCP Bucket for your data and link this with your data version control setup (M21)
 * [X] Create a trigger workflow for automatically building your docker images (M21) 
-* [X] Get your model training in GCP using either the Engine or Vertex AI (M21) 
+* [ ] Get your model training in GCP using either the Engine or Vertex AI (M21) 
 * [X] Create a FastAPI application that can do inference using your model (M22)  
 * [X] Deploy your model in GCP using either Functions or Run as the backend (M23)
 * [X] Write API tests for your application and setup continues integration for these (M24)
@@ -323,7 +323,7 @@ https://github.com/ChrisVN123/02476_mlops_exam/actions/workflows/cml_data.yaml -
 >
 > Answer:
 
---- As mentioned we made use of config files. With the help of hydra after each run our configuration was saved in the outputs folder in a new folder based on the time and date of the run. Here one .hydra folder was created containing our hydra and config.yaml configuration. Furthermore, a wandb folder is created, which contains our requirements file used on that run, any models created, as well as a .dvc file to track the new pickled version of our model and a data.dvc file such that we know what data file was used (this data file is then pushed to GCloud bucket). A clear improvement would be to not also store the model locally each time we run, but as the models are very small this is not that important. By logging everything that is written to the terminal we add another step to ensure that no information is lost. If we had to reproduce the experiment we would just use the saved model, the config file and use the data.dvc to find the data used in the GCloud bucket. As we also save the seed used we can acheivie exactly the same test-train split.  ---
+--- As mentioned we made use of config files. With the help of hydra after each run our configuration was saved in the outputs folder in a new folder based on the time and date of the run. Here one .hydra folder was created containing our hydra and config.yaml configuration. Furthermore, a wandb folder is created, which contains our requirements file used on that run, any models created, and a data.dvc file such that we know what data file was used (this data file is then pushed to GCloud bucket). A clear improvement would be to not also store the model locally each time we run, but as the models are very small this is not that important. By logging everything that is written to the terminal we add another step to ensure that no information is lost. If we had to reproduce the experiment we would just use the saved model, the config file and use the data.dvc to find the data used in the GCloud bucket. As we also save the seed used we can acheivie exactly the same test-train split.  ---
 
 ### Question 14
 
@@ -363,7 +363,8 @@ https://github.com/ChrisVN123/02476_mlops_exam/actions/workflows/cml_data.yaml -
 
 For example, we created a Docker image to handle training our machine learning model. The Dockerfile includes a Python base image, installs required libraries like PyTorch and W&B, and copies our project files from the src/ directory. The image is set up to run our train_model.py script, which handles tasks like preprocessing data, training the model, and logging results to W&B.
 
-We also integrated Docker with Google Cloud services. Using GitHub Actions, we automatically built and pushed Docker images to Google Cloud Artifact Registry, which allowed us to use them for training and deployment. ---
+We also built a docker image for our API and deployed it on the GCP. Furthermore, using GitHub Actions, we automatically built and pushed Docker images to Google Cloud Artifact Registry, which allowed us to use them for training.
+All dockerfiles are found in the folder dockerfiles in the root of the repository. ---
 
 ### Question 16
 
@@ -395,11 +396,11 @@ We also integrated Docker with Google Cloud services. Using GitHub Actions, we a
 >
 > Answer:
 
---- We used Google Cloud Storage, Compute Engine, and Vertex AI in our project. Cloud Storage Buckets were mostly used to store data and Docker images for our workflows. While the buckets served as the storage location for training data, they also played a role in validating and monitoring data changes. Our workflows leveraged these buckets to detect changes, and automated pull request comments were generated to inform users of any updates or differences in the data.
+--- We used Google Cloud Storage, Compute Engine, and Vertex AI in our project. Cloud Storage Buckets were mostly used to store data and Docker images for our workflows. While the buckets served as the storage location for training data, they also played a role in validating and monitoring data changes. Our workflows leveraged these buckets to detect changes, and automated pull request comments were generated to inform users of any updates or differences in the data. We made use of the Artifact Registry to store our docker images. This allowed us to easily access and deploy our images to the cloud.
 
 For training, we relied on Vertex AI and Compute Engine. Vertex AI was the primary platform for managing machine learning training tasks, while Compute Engine provided flexible VM resources for additional computational needs. These services were integrated into our continuous integration workflows.
 
-To support continuous integration, workflows were triggered automatically upon detecting changes in data or configurations. These workflows streamlined training, data validation, and container management, helping to maintain a consistent and efficient pipeline for both development and production tasks.---
+To support continuous integration, workflows were triggered automatically upon detecting changes during pushes and pull-requests. These workflows uploaded data to the cloud, built Docker images, and ran tests.---
 
 ### Question 18
 
@@ -414,7 +415,7 @@ To support continuous integration, workflows were triggered automatically upon d
 >
 > Answer:
 
---- The size of our dataset was by choice quite small, minimizing the importance of using VM's, but we did integrate it into our project as a show of understading. We used Compute Engine for cloud-based model training by configuring virtual machines to run our training scripts directly or in conjunction with Vertex AI. This allowed us to leverage scalable cloud resources to handle datasets and complex models more efficiently. Compute Engine also played a key role in integrating with our CI/CD workflows. Automated tasks such as data validation, logging artifacts to Weights & Biases (W&B), and building Docker images were executed seamlessly using Compute Engine. Though in our final workflow the docker images are build using GitHub VM's and then pushed to an artifact registry in GCP ---
+--- The size of our dataset was by choice quite small, minimizing the importance of using VM's, but we did integrate it into our project as a show of understanding. We used Compute Engine for cloud-based model training by configuring virtual machines to run our training scripts directly. This allowed us to leverage scalable cloud resources to handle datasets and complex models more efficiently. Compute Engine also played a key role in integrating with our CI/CD workflows. Automated tasks such as data validation, logging artifacts to Weights & Biases (W&B), and building Docker images were executed seamlessly using Compute Engine. Though in our final workflow the docker images are build using GitHub VM's and then pushed to an artifact registry in GCP ---
 
 ### Question 19
 
@@ -445,7 +446,7 @@ To support continuous integration, workflows were triggered automatically upon d
 >
 > Answer:
 
---- Initially we build our docker images in github actions which was then pushed to Cloud Artifact Registry. Later we wanted to move this build into cloud to move computation time from github. We used a trigger in cloud to get the repository from Github and build a docker image when something was pushed to the repository in Github As seen in the image this was no easy task, the main challange was for google to retrieve the data from a our storage bucket. It took quite a few tries, mostly just making the syntax and steps in the cloudbuild.yaml (find in root of our repository) to work.  ---
+--- Initially we build our docker images in github actions which was then pushed to Cloud Artifact Registry. Later we wanted to move this build into cloud to move computation time from github. We used a trigger in cloud to get the repository from Github and build a docker image when something was pushed to the repository in Github. As seen in the image this was no easy task, the main challenge was for google to retrieve the data from our storage bucket. It took quite a few tries, mostly just making the syntax and steps in the cloudbuild.yaml (find in root of our repository) to work.  ---
 
 ![cloud](figures/cloudbuilding.png)
 
@@ -462,7 +463,7 @@ To support continuous integration, workflows were triggered automatically upon d
 >
 > Answer:
 
---- We did use the cloud for training but mostly just to try and get better at setting it up and get a deeper understanding of how it works and when to use it. Our model and dataset is quite simple and does not require several hours of training before it reaches a somewhat low error rate. If one where to create a larger model say a convolutional neural network for classification of images the cloud engine might be more appropriate to use than training locally. But in general, the use of the Cloud Engine and Vertex AI shouldn't necesarilly be used if the model and dataset is simple enough to be trained locally. ---
+--- We did use the cloud for training but mostly just to try and get better at setting it up and get a deeper understanding of how it works and when to use it. Our model and dataset is quite simple and does not require several hours of training before it reaches a somewhat low error rate. If one where to create a larger model say a convolutional neural network for classification of images the cloud engine might be more appropriate to use than training locally. But in general, the use of the Cloud Engine and Vertex AI shouldn't necessarily be used if the model and dataset is simple enough to be trained locally. ---
 
 ## Deployment
 
@@ -479,7 +480,7 @@ To support continuous integration, workflows were triggered automatically upon d
 >
 > Answer:
 
---- Yes we did manage to create an API in src/exam_project/api.py. We created a landing page where it is simply explained that the API allows you to go to /predict/{initials} and you can then type in the initials of any company in our test database and it returns the predicted sector and the correct sector. If the initials do not match, we print all available initials for the user. As the inputs to the model are quite detailed and lengthy we found this to be the easiest solution. Another option could have been to let the user input all the necessary inputs like number of full-time employees of a specific firm through a frontend, and then run the model. We used ONNX to make the API lightweight and quick.---
+--- Yes we did manage to create an API in src/exam_project/api.py. We created a landing page where it is simply explained that the API allows you to go to /predict/{ticker_code} and you can then type in the ticker_code of any company in our test database and it returns the predicted sector and the correct sector. If the ticker_code do not match, we print all available ticker_code for the user. As the inputs to the model are quite detailed and lengthy we found this to be the easiest solution. Another option could have been to let the user input all the necessary inputs like number of full-time employees of a specific firm through a frontend, and then run the model. We used ONNX to make the API lightweight and quick.---
 
 ### Question 24
 
@@ -515,7 +516,7 @@ https://api-983839719560.europe-west1.run.app/predict/AAPL ---
 >
 > Answer:
 
---- We did not manage to implement unit testing or load testing of our API. However, we did make some api tests in tests/test_api.py which tested if our API behaved as expected for different paths, e.g when invalid company initials are provided do we get the correct error code? Load testing could have been implemented by using the locust package. Then we would have defined a user class in the file tests/perfomancetests/locustfile.py where we defined how this user would interact with our api and what pages it would visit. Then in the terminal we could run the command 
+--- We did not manage to implement unit testing or load testing of our API. However, we did make some api tests in tests/test_api.py which tested if our API behaved as expected for different paths, e.g when an invalid company ticker code is provided do we get the correct error code? Load testing could have been implemented by using the locust package. Then we would have defined a user class in the file tests/perfomancetests/locustfile.py where we defined how this user would interact with our api and what pages it would visit. Then in the terminal we could run the command 
 locust -f tests/performancetests/locustfile.py ---
 
 ### Question 26
@@ -550,7 +551,7 @@ locust -f tests/performancetests/locustfile.py ---
 >
 > Answer:
 
---- Group member 1 used 14 kr, group member 2 used, group member 3 used, which was mostly spend on the compute engine which was mainly used for persistent disk storage. In general working in the cloud obviously offers huge benefits when having to scale, but it does take some time to get used to working in the cloud. However, it wasn't as difficult as it could have been expected. The most challenging part was getting the docker file up and running for the API and setting up dvc push and pull in a way that allowed for easy tracking of the data and model used ---
+--- Group member 1 used 18 kr, group member 2 used 10 kr, group member 3 used 4 kr, which was mostly spend on the compute engine which was mainly used for persistent disk storage. In general working in the cloud obviously offers huge benefits when having to scale, but it does take some time to get used to working in the cloud. However, it wasn't as difficult as it could have been expected. The most challenging part was getting the docker file up and running for the API and setting up dvc push and pull in a way that allowed for easy tracking of the data and model used.  Another big challenge in building docker images with GCP was syntax in the configuration file for google to understand the correct steps for retrieving and loading data and building docker images.---
 
 ### Question 28
 
@@ -566,7 +567,7 @@ locust -f tests/performancetests/locustfile.py ---
 >
 > Answer:
 
---- We didn't implement anything not covored by the questions but focused on the curricullum. ---
+--- We didn't implement anything not covored by the questions but focused on the curriculum. ---
 
 ### Question 29
 
@@ -585,7 +586,7 @@ locust -f tests/performancetests/locustfile.py ---
 
 --- The diagram below illustrates the overall architecture of our system, encompassing both the developer and user perspectives.
 
-From the developer side, the project is hosted on GitHub, where brand new code and features are pushed to the repository. Upon each push, automated workflows are triggered via GitHub Actions to run tests and ensure code quality before merging changes into the main branch. Model training is also a core aspect of the workflow, where we log metrics and parameters using Weights & Biases (Wandb). Wandb facilitates model versioning and artifact storage within our model registry. Similarly, the data used for training is version-controlled using DVC (Data Version Control), with key statistics automatically monitored and summarized in pull request comments through GitHub Actions.
+From the developer side, the project is hosted on GitHub, where brand new code and features are pushed to the repository. Upon each push and pull request, automated workflows are triggered via GitHub Actions to run tests and ensure code quality before merging changes into the main branch. Model training is also a core aspect of the workflow, where we log metrics and parameters using Weights & Biases (Wandb). Wandb facilitates model versioning and artifact storage within our model registry. Similarly, the data used for training is version-controlled using DVC (Data Version Control), with key statistics automatically monitored and summarized in pull request comments through GitHub Actions.
 
 From the user side, the GitHub repository provides access to the project code and documentation and the possibility for suggesting changes to the code made by the developers . The Google Cloud Platform (GCP) plays a crucial role in hosting our latest trained model, storing associated data, and providing a Docker image for seamless deployment and use. This enables users to fetch the latest model, its dependencies, and datasets to integrate or utilize them in their own workflows.
 ![ProjectStructure](figures/ProjectStructure.png) ---
@@ -605,7 +606,8 @@ From the user side, the GitHub repository provides access to the project code an
 --- One of the biggest challenges, which we saw already in the exercises, was the amount of time it takes in general to train the model, build docker images, etc. We therefore chose a smaller dataset and model to focus more intensely on the setup around the model, such as cloud, logging, workflow, tests, etc.
 Furthermore, we used a collaboration setup where we initially made 3 branches. The idea was to use one branch each between the group members. This did create quite a few challenges as it was hard to make sure all branches was up to date before merging them. To solve this we changed method by making a new branch every time we were to make a new feature, then made a pull request for testing before we merged. Additionally we created rules that the code to comply with before commiting to make sure PEP8 standards were met, securing that we remember to pull before pushing and that one could not push directly to main branch but had to branch and make a pull request first for testing.
 
-We also hit a few challenges with Google Cloud Platform (GCP) but most of them was related to setup and was solved during the exercises. Meaning that most of the tasks regarding the cloud on the project ran a bit smoother. It was only the authentication part that took most time during the cloud setup for the project. ---
+
+We also hit a few challenges with Google Cloud Platform (GCP). The biggest challenge in building docker images with GCP was syntax in the configuration file for google to understand the correct steps for retrieving and loading data and building docker images. Furthermore, succesfully deploying the API through our api.dockerfile was harder than expected, but this was mainly due to problems with the dockerfile and not GCP. Overall, we are quite happy with how we manage to use GCP in our project.---
 ### Question 31
 
 > **State the individual contributions of each team member. This is required information from DTU, because we need to**
@@ -621,9 +623,9 @@ We also hit a few challenges with Google Cloud Platform (GCP) but most of them w
 >
 > Answer:
 
---- Student s224397 was in charge of continous integration, pre-commit hooks, linting, building the API and developing the API dockercontainer , saving it in the artifact registry and deploying it through cloud run.
-Student s201725 was in charge of project set-up on GitHub and codestructure setup with cookiecutter. The student was in charge of securing the codestructure was continouesly kept. Further the student was in charge of cloud set-up including continoues integration workflows with the cloud. The student also spent on logging and integration with WandB.
-Student s224411 was in charge of datadrifting and apitesting the code and the continoues workflow regarding data changes. 
+--- 
+Student s224397 was in charge of continous integration, pre-commit hooks, linting, building the API and developing the API dockercontainer , saving it in the artifact registry and deploying it through cloud run.
+Student s201725 was in charge of project set-up on GitHub and codestructure setup with cookiecutter. The student was in charge of securing the codestructure was continouesly maintained. Further the student was in charge of continoues integration workflows with the cloud. The student also spent time on logging and integration with WandB.
+Student s224411 was in charge of datadrifting and apitesting the code and the continuous workflow regarding data changes. 
 
-All members contributed to answering questions and bug fixing. 
----
+All members contributed to answering questions and bug fixing. ---
