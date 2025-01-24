@@ -1,4 +1,6 @@
 steps:
+- name: Download test data from Google Cloud Storage
+  run: gsutil cp -r gs://exam_mlops_data_bucket/dvc/data/* ./data/
 - name: 'gcr.io/cloud-builders/docker'
   id: 'Build container image'
   args: [
