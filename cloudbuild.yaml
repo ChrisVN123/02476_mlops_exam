@@ -1,6 +1,7 @@
 steps:
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  args: ['gsutil', 'cp', '-r', 'gs://exam_mlops_data_bucket/dvc', '.']
+  args: ['gsutil', 'cp', '-r', 'gs://exam_mlops_data_bucket/dvc/data/*', './data/']
+- 
 #- name: 'python'
 #  entrypoint: 'bash'
 #  args: ['-c', 'pip install dvc dvc-gs; dvc pull --no-run-cache']
