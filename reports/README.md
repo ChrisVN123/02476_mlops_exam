@@ -167,7 +167,7 @@ will check the repositories and the code to verify your answers.
 2. Clone the project repository
 3. Create environment using conda env create -f environment.yml
 
-If a new member does not want to use conda we added a requirements.txt file with all the dependencies listed. To install the dependencies one would have to run the following commands:
+If a new member does not want to use conda we added a requirements.txt file with all the dependencies listed. To install the dependencies one would have to complete the following steps:
 1. Create virtual environment
 2. pip install -r requirements.txt
 
@@ -271,7 +271,7 @@ We made use of github actions on all the pull request to run linting, formatting
 >
 > Answer:
 
---- We did make use of DVC in the following way: We stored our data in google cloud buckets such that we did not need to store our data in github. Instead new users of our project can just dvc pull and github actions does this automatically when running the tests. We did not do that for the dockerfiles as the setup with providing a json key for GCloud seemeed a bit tricky, if we didn't want to risk making that json file avaible online through the docker image. To the extent we did use dvc it made our project more scalable and shareable as large data files would not be a problem to share, even as the data files grows in size. ---
+--- We did make use of DVC in the following way: We stored our data in google cloud buckets such that we did not need to store our data in github. Instead new users of our project can just use dvc pull and github actions does this automatically when running the tests. We did not do that for the dockerfiles as the setup with providing a json key for GCloud seemeed a bit tricky, if we didn't want to risk making that json file avaible online through the docker image. To the extent we did use dvc it made our project more scalable and shareable as large data files would not be a problem to share, even as the data files grows in size. ---
 
 ### Question 11
 
@@ -288,7 +288,7 @@ We made use of github actions on all the pull request to run linting, formatting
 >
 > Answer:
 
---- We have organized our continous integration into 5 seperate files. The first file, tests.yaml, is for the unit tests which runs on the latest versions of ubunti, windows and mac-os for both python 3.12 and 3.11. It downloads our data from the cloud and runs our tests through pytest and calculates the coverage. We also have a pre_commit.yaml file which runs the pre-commit check in github actions which we already use to check all of our commits. This extra step ensures that our linting an formatting is uniform. Our third file, staged_model.yaml runs a perfomance test if a new model is part of the pull request and stages that model and its performance to the wandb model registry. The fourth file, cloudbuild.yaml, only runs when new data is part of the pull request. In that case it analyzes the data through dataset_statistics.py and prints the result of that on the PR-page. Lastly, cloudbuild.yaml is used to build and push our docker images to GCP through GithubActions. We also use the standard dependabot.yaml to help with dependencies. We have used caches a lot, using 13 cahces actively, to make github actions run much more efficiently. An example of one of our triggered workflows can be seen here:
+--- We have organized our continous integration into 5 seperate files. The first file, tests.yaml, is for the unit tests which runs on the latest versions of ubuntu, windows and mac-os for both python 3.12 and 3.11. It downloads our data from the cloud and runs our tests through pytest and calculates the coverage. We also have a pre_commit.yaml file which runs the pre-commit check in github actions which we already use to check all of our commits. This extra step ensures that our linting an formatting is uniform. Our third file, staged_model.yaml runs a perfomance test if a new model is part of the pull request and stages that model and its performance to the wandb model registry. The fourth file, cloudbuild.yaml, only runs when new data is part of the pull request. In that case it analyzes the data through dataset_statistics.py and prints the result of that on the PR-page. Lastly, cloudbuild.yaml is used to build and push our docker images to GCP through GithubActions. We also use the standard dependabot.yaml to help with dependencies. We have used caches a lot, using 13 cahces actively, to make github actions run much more efficiently. An example of one of our triggered workflows can be seen here:
 https://github.com/ChrisVN123/02476_mlops_exam/actions/workflows/cml_data.yaml ---
 
 ## Running code and tracking experiments
@@ -323,7 +323,7 @@ https://github.com/ChrisVN123/02476_mlops_exam/actions/workflows/cml_data.yaml -
 >
 > Answer:
 
---- As mentioned we made use of config files. With the help of hydra after each run our configuration was saved in the outputs folder in a new folder based on the time and date of the run. Here one .hydra folder was created containing our hydra and config.yaml configuration. Furthermore, a wandb folder is created, which contains our requirements file used on that run, any models created, as well as a .dvc file to track the new picked version of our model and a data.dvc file such that we know what data file was used (this data file is then pushed to GCloud bucket). A clear improvement would be to not also store the model locally each time we run, but as the models are very small this is not that important. By logging everything that is written to the terminal we add another step to ensure that no information is lost. If we had to reproduce the experiment we would just use the saved model, the config file and use the data.dvc to find the data used in the GCloud bucket. As we also save the seed used we can acheivie exactly the same test-train split.  ---
+--- As mentioned we made use of config files. With the help of hydra after each run our configuration was saved in the outputs folder in a new folder based on the time and date of the run. Here one .hydra folder was created containing our hydra and config.yaml configuration. Furthermore, a wandb folder is created, which contains our requirements file used on that run, any models created, as well as a .dvc file to track the new pickled version of our model and a data.dvc file such that we know what data file was used (this data file is then pushed to GCloud bucket). A clear improvement would be to not also store the model locally each time we run, but as the models are very small this is not that important. By logging everything that is written to the terminal we add another step to ensure that no information is lost. If we had to reproduce the experiment we would just use the saved model, the config file and use the data.dvc to find the data used in the GCloud bucket. As we also save the seed used we can acheivie exactly the same test-train split.  ---
 
 ### Question 14
 
