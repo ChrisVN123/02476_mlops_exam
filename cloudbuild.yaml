@@ -1,6 +1,16 @@
 steps:
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  args: ['gsutil', 'cp', '-r', 'gs://exam_mlops_data_bucket', 'data/']
+#- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+#  args: ['gsutil', 'cp', '-r', 'gs://exam_mlops_data_bucket', 'data/']
+- name: 'python'
+  entrypoint: 'python'
+  args: ['-m', 'pip', 'install', 'dvc', 'dvc-gs']
+- name: 'alpine'
+  id: "Run dvc"
+  entrypoint: "sh"
+  args:
+    - '-c'
+    - |
+      dvc pull
 - name: 'gcr.io/cloud-builders/docker'
   id: 'Build container image'
   args: [
