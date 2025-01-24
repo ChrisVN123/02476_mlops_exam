@@ -204,7 +204,7 @@ We stuck to the template quite consistly and filled out all the folders from the
 >
 > Answer:
 
---- We used ruff for linting and formating. We decidecd to use 120 characters as the maximum line length. We also used the package mypy for typing checks as described in Q3. When we are working with larger more complex projects, where more people are involved, a standard way of writing your code becomes crucial. The PEP 8 style guide for python is a good example which also what ruff as a default complies with. When we have a standard way of linting, formatting and typing our code, it makes it much easier for anyone who at a later time has to read, understand and debug the code. Furthermore, IDEs can more effectively help with error detection when the code is formatted in a standard way. ---
+--- We used ruff for linting and formating. We decidecd to use 120 characters as the maximum line length. We also used the package mypy for typing checks as described in Q3. When we are working with larger more complex projects, where more people are involved, a standard way of writing your code becomes crucial. The PEP8 style guide for python is a good example which is consistent with the default behaviour of ruff. When we have a standard way of linting, formatting and typing our code, it makes it much easier for anyone who at a later time has to read, understand and debug the code. Furthermore, IDEs can more effectively help with error detection when the code is formatted in a standard way. ---
 
 ## Version control
 
@@ -340,7 +340,7 @@ https://github.com/ChrisVN123/02476_mlops_exam/actions/workflows/cml_data.yaml -
 >
 > Answer:
 
---- We used Weights and Biases (WandB) to track loss and parameter optimization during training to get a better understanding of the model. The loss graph shows shows that our model quite quickly finds a minimum and stays in a tight loss interval jumping up and down. This tells us that training the model for more epochs most likely want improve the prediction accuracy. We acknowledge that the size of our data is somewhat too smallf as we have to split into training and test sets making the subsets of the data for training quite small. Although our model seems to be quite precise, one could definitely find bigger datasets to train on. Furthermore we used the paramater and weight plots from WandB to check if the weights does in fact stabilize in at the apperant convergence area of the loss plot. And that seems to be the case, supporting the hypothesis that more training would not necessarily improve the accuracy of the model. In general, tracking loss, parameters and weights is a great idea to understand what happens in your model during training. If one were to work with even more complex model, WandB would pose as and ever stronger tool than it did in our project. Additionally one could combine it with a profiling of ones code to find weak links in the setup and improve the model and code. ---
+--- We used Weights and Biases (WandB) to track loss and parameter optimization during training to get a better understanding of the model. The loss graph shows that our model quite quickly finds a minimum and stays in a tight loss interval jumping up and down. This tells us that training the model for more epochs most likely won't improve the prediction accuracy. We acknowledge that the size of our data is somewhat too small as we have to split into training and test sets making the subsets of the data for training quite small. Although our model seems to be quite precise, one could definitely find bigger datasets to train on. Furthermore we used the paramater and weight plots from WandB to check if the weights does in fact stabilize in at the apperant convergence area of the loss plot. And that seems to be the case, supporting the hypothesis that more training would not necessarily improve the accuracy of the model. In general, tracking loss, parameters and weights is a great idea to understand what happens in your model during training. If one were to work with even more complex model, WandB would pose as and ever stronger tool than it did in our project. Additionally one could combine it with a profiling of ones code to find weak links in the setup and improve the model and code. ---
 
 ![loss](figures/wandb_loss.png)
 ![grads](figures/wandb_grads.png)
@@ -513,7 +513,7 @@ https://api-983839719560.europe-west1.run.app/predict/AAPL ---
 >
 > Answer:
 
---- We did not implement unit testing or load testing per se. However, we did make some api tests in tests/test_api.py which tested if our API behaved as expected for different paths, e.g when invalid company initials are provided. Load testing could have been implemented by using the locust package. Then we would have defined a user class in the file tests/perfomancetests/locustfile.py where we defined how this user would interact with our api and what pages it would visit. Then we could run the command 
+--- We did not manage to implement unit testing or load testing of our API. However, we did make some api tests in tests/test_api.py which tested if our API behaved as expected for different paths, e.g when invalid company initials are provided do we get the correct error code? Load testing could have been implemented by using the locust package. Then we would have defined a user class in the file tests/perfomancetests/locustfile.py where we defined how this user would interact with our api and what pages it would visit. Then in the terminal we could run the command 
 locust -f tests/performancetests/locustfile.py ---
 
 ### Question 26
@@ -548,7 +548,7 @@ locust -f tests/performancetests/locustfile.py ---
 >
 > Answer:
 
---- Group member 1 used 14 kr, Group member 2... which was mostly spend on the compute engine which was mainly used for persistent disk storage. In general working in the cloud obviously offers huge benefits when having to scale, but it does take some time to get used to working in the cloud. However, it wasn't as difficult as it could have been expected. The most challenging part was getting the docker file up and running for the API and setting up dvc push and pull in a way that allowed for easy tracking of the data and model used ---
+--- Group member 1 used 14 kr, group member 2 used, group member 3 used, which was mostly spend on the compute engine which was mainly used for persistent disk storage. In general working in the cloud obviously offers huge benefits when having to scale, but it does take some time to get used to working in the cloud. However, it wasn't as difficult as it could have been expected. The most challenging part was getting the docker file up and running for the API and setting up dvc push and pull in a way that allowed for easy tracking of the data and model used ---
 
 ### Question 28
 
@@ -583,9 +583,9 @@ locust -f tests/performancetests/locustfile.py ---
 
 --- The diagram below illustrates the overall architecture of our system, encompassing both the developer and user perspectives.
 
-From the developer side, the project is hosted on GitHub, where new code and features are pushed to the repository. Upon each push, automated workflows are triggered via GitHub Actions to run tests and ensure code quality before merging changes into the main branch. Model training is also a core aspect of the workflow, where we log metrics and parameters using Weights & Biases (Wandb). Wandb facilitates model versioning and artifact storage within our model registry. Similarly, the data used for training is version-controlled using DVC (Data Version Control), with key statistics automatically monitored and summarized in pull request comments through GitHub Actions.
+From the developer side, the project is hosted on GitHub, where brand new code and features are pushed to the repository. Upon each push, automated workflows are triggered via GitHub Actions to run tests and ensure code quality before merging changes into the main branch. Model training is also a core aspect of the workflow, where we log metrics and parameters using Weights & Biases (Wandb). Wandb facilitates model versioning and artifact storage within our model registry. Similarly, the data used for training is version-controlled using DVC (Data Version Control), with key statistics automatically monitored and summarized in pull request comments through GitHub Actions.
 
-From the user side, the GitHub repository provides access to the project code and documentation. The Google Cloud Platform (GCP) plays a crucial role in hosting our latest trained model, storing associated data, and providing a Docker image for seamless deployment and use. This enables users to fetch the latest model, its dependencies, and datasets to integrate or utilize in their workflows.
+From the user side, the GitHub repository provides access to the project code and documentation and the possibility for suggesting changes to the code made by the developers . The Google Cloud Platform (GCP) plays a crucial role in hosting our latest trained model, storing associated data, and providing a Docker image for seamless deployment and use. This enables users to fetch the latest model, its dependencies, and datasets to integrate or utilize them in their own workflows.
 ![ProjectStructure](figures/ProjectStructure.png) ---
 
 ### Question 30
@@ -603,7 +603,7 @@ From the user side, the GitHub repository provides access to the project code an
 --- One of the biggest challenges, which we saw already in the exercises, was the amount of time it takes in general to train the model, build docker images, etc. We therefore chose a smaller dataset and model to focus more intensely on the setup around the model, such as cloud, logging, workflow, tests, etc.
 Furthermore, we used a collaboration setup where we initially made 3 branches. The idea was to use one branch each between the group members. This did create quite a few challenges as it was hard to make sure all branches was up to date before merging them. To solve this we changed method by making a new branch every time we were to make a new feature, then made a pull request for testing before we merged. Additionally we created rules that the code to comply with before commiting to make sure PEP8 standards were met, securing that we remember to pull before pushing and that one could not push directly to main branch but had to branch and make a pull request first for testing.
 
-We also hit a few challanges with Google Cloud Platform (GCP) but most of them was related to setup and was solved during the exercises. Meaning that most of the tasks regarding the cloud on the project ran a bit smoother. It was only the authentication part that took most time during the cloud setup for the project. ---
+We also hit a few challenges with Google Cloud Platform (GCP) but most of them was related to setup and was solved during the exercises. Meaning that most of the tasks regarding the cloud on the project ran a bit smoother. It was only the authentication part that took most time during the cloud setup for the project. ---
 ### Question 31
 
 > **State the individual contributions of each team member. This is required information from DTU, because we need to**
