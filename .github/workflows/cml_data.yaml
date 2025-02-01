@@ -67,7 +67,7 @@ jobs:
 
       # Step 8: Setup CML for commenting
       - name: Setup CML
-        uses: iterative/setup-cml@v2
+        uses: iterative/setup-cml@v3
 
       # Step 9: Comment on PR with report
       - name: Comment on PR
