@@ -11,7 +11,7 @@ numpy<2
 onnxruntime
 pandas==2.2.3
 scikit-learn==1.6.0
-torch==2.2.2
+torch==2.6.0
 # Editable
 typer==0.15.1
 uvicorn==0.34.0
